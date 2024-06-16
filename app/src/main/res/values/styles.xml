@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ButtonBase" parent="Widget.MaterialComponents.Button">
+        <item name="android:textSize">20sp</item>
+        <item name="cornerRadius">100dp</item>
+        <item name="backgroundTint">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:paddingStart">10sp</item>
+        <item name="android:paddingEnd">10sp</item>
+        <item name="android:paddingBottom">10sp</item>
+        <item name="android:paddingTop">10sp</item>
+    </style>
+
+
+
+</resources>
