@@ -17,14 +17,6 @@ class ListAdapter (private val listItemManager: ListItemManager) : RecyclerView.
         notifyItemInserted(itemCount -1)
     }
 
-    private fun toggleStrikeThrough(tvArtikelTitle: TextView, isChecked: Boolean){
-        if(isChecked){
-            tvArtikelTitle.paintFlags = tvArtikelTitle.paintFlags or STRIKE_THRU_TEXT_FLAG
-        } else {
-            tvArtikelTitle.paintFlags = tvArtikelTitle.paintFlags and STRIKE_THRU_TEXT_FLAG.inv()
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtikelViewHolder {
         return ArtikelViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_artikel,parent,false))
     }
@@ -42,7 +34,6 @@ class ListAdapter (private val listItemManager: ListItemManager) : RecyclerView.
 
             itemTitle.text = currentItem.title
             checkBox.isChecked = currentItem.isChecked
-            toggleStrikeThrough(itemTitle, checkBox.isChecked)
             /*checkBox.setOnCheckedChangeListener {_, isChecked ->
                 if(isChecked){
                     listItemManager.removeItem(currentItem)

@@ -10,7 +10,12 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.PopupWindow
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -22,9 +27,20 @@ class ListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //enableEdgeToEdge()
-
+        enableEdgeToEdge()
         setContentView(R.layout.list_activity)
+
+        val contentLayout = findViewById<ConstraintLayout>(R.id.main)
+        ViewCompat.setOnApplyWindowInsetsListener(contentLayout) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.updatePadding(
+                left = insets.left,
+                top = insets.top,
+                right = insets.right,
+                bottom = insets.bottom
+            )
+            windowInsets
+        }
 
         val listItemManager = ListItemManager(this, "items.json")
 
@@ -34,14 +50,14 @@ class ListActivity : AppCompatActivity() {
         rvItemList.layoutManager = LinearLayoutManager(this)
 
 
-        val btnAddItem : ImageButton = findViewById(R.id.btnAddItem)
+        val btnAddItem : Button = findViewById(R.id.btnAddItem)
 
         // inflate the layout of the popup window
         val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val popupView: View = inflater.inflate(R.layout.popup_add, null)
 
         // create the popup window
-        val width = 700
+        val width = LinearLayout.LayoutParams.WRAP_CONTENT
         val height = LinearLayout.LayoutParams.WRAP_CONTENT
         val focusable = true
         val popupWindow = PopupWindow(popupView, width, height, focusable)
