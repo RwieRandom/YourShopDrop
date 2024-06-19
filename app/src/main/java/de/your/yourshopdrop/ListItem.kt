@@ -1,6 +1,6 @@
 package de.your.yourshopdrop
 
-data class Artikel (
+data class ListItem (
     val title: String,
     var isChecked: Boolean = false
 )

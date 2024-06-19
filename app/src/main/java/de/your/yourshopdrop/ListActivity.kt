@@ -1,5 +1,6 @@
 package de.your.yourshopdrop
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -15,8 +16,9 @@ import androidx.recyclerview.widget.RecyclerView
 
 
 class ListActivity : AppCompatActivity() {
-    private lateinit var artikelAdapter: ArtikelAdapter
+    private lateinit var listAdapter: ListAdapter
 
+    @SuppressLint("ClickableViewAccessibility", "InflateParams")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -24,9 +26,11 @@ class ListActivity : AppCompatActivity() {
 
         setContentView(R.layout.list_activity)
 
-        artikelAdapter = ArtikelAdapter(mutableListOf())
+        val listItemManager = ListItemManager(this, "items.json")
+
+        listAdapter = ListAdapter(listItemManager)
         val rvItemList : RecyclerView = findViewById(R.id.rvItemList)
-        rvItemList.adapter = artikelAdapter
+        rvItemList.adapter = listAdapter
         rvItemList.layoutManager = LinearLayoutManager(this)
 
 
@@ -44,7 +48,6 @@ class ListActivity : AppCompatActivity() {
 
         btnAddItem.setOnClickListener{
             // show the popup window
-            // which view you pass in doesn't matter, it is only used for the window tolken
             popupWindow.showAtLocation(this.window.decorView , Gravity.CENTER, 0, 0)
 
             val etItemHeader: EditText = popupView.findViewById(R.id.etItemHeader)
@@ -53,15 +56,15 @@ class ListActivity : AppCompatActivity() {
             btnSaveItem.setOnClickListener {
                 val artikelTitle = etItemHeader.text.toString()
                 if (artikelTitle.isNotEmpty()) {
-                    val artikel = Artikel(artikelTitle)
-                    artikelAdapter.addArtikel(artikel)
+                    val item = ListItem(artikelTitle)
+                    listAdapter.add(item)
                     etItemHeader.text.clear()
                     popupWindow.dismiss()
                 }
             }
 
             // dismiss the popup window when touched
-            popupView.setOnTouchListener { v, event ->
+            popupView.setOnTouchListener { _, _ ->
                 popupWindow.dismiss()
                 true
             }

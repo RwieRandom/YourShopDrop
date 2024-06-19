@@ -1,6 +1,5 @@
 package de.your.yourshopdrop
 
-import android.annotation.SuppressLint
 import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
 import android.view.LayoutInflater
 import android.view.View
@@ -9,13 +8,13 @@ import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class ArtikelAdapter (private val artikels: MutableList<Artikel>) : RecyclerView.Adapter<ArtikelAdapter.ArtikelViewHolder>() {
+class ListAdapter (private val listItemManager: ListItemManager) : RecyclerView.Adapter<ListAdapter.ArtikelViewHolder>() {
 
     class ArtikelViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    fun addArtikel(artikel: Artikel){
-        artikels.add(artikel)
-        notifyItemInserted(artikels.size-1)
+    fun add(item: ListItem){
+        listItemManager.addItem(item)
+        notifyItemInserted(itemCount -1)
     }
 
     private fun toggleStrikeThrough(tvArtikelTitle: TextView, isChecked: Boolean){
@@ -31,19 +30,27 @@ class ArtikelAdapter (private val artikels: MutableList<Artikel>) : RecyclerView
     }
 
     override fun getItemCount(): Int {
-        return artikels.size
+        return listItemManager.getItemCount()
     }
 
     override fun onBindViewHolder(holder: ArtikelViewHolder, position: Int) {
-        val currentArtikel = artikels[position];
+        val currentItem = listItemManager.getItem(position);
+
         holder.itemView.apply {
-            var artikelTitle = findViewById<TextView>(R.id.tvArtikelTitle)
-            var checkBox = findViewById<CheckBox>(R.id.cbArtikelDone)
-            artikelTitle.text = currentArtikel.title
-            checkBox.isChecked = currentArtikel.isChecked
-            toggleStrikeThrough(artikelTitle, checkBox.isChecked)
-            checkBox.setOnCheckedChangeListener { _, isChecked -> toggleStrikeThrough(artikelTitle, isChecked) }
-            currentArtikel.isChecked = !currentArtikel.isChecked
+            val itemTitle = findViewById<TextView>(R.id.tvArtikelTitle)
+            val checkBox = findViewById<CheckBox>(R.id.cbArtikelDone)
+
+            itemTitle.text = currentItem.title
+            checkBox.isChecked = currentItem.isChecked
+            toggleStrikeThrough(itemTitle, checkBox.isChecked)
+            /*checkBox.setOnCheckedChangeListener {_, isChecked ->
+                if(isChecked){
+                    listItemManager.removeItem(currentItem)
+                    notifyItemRemoved(listItemManager.getItemPosition(currentItem))
+                }
+
+            }
+            currentItem.isChecked = !currentItem.isChecked*/
         }
     }
 }
