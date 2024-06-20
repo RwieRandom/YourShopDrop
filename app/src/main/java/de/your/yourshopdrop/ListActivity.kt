@@ -1,6 +1,7 @@
 package de.your.yourshopdrop
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -27,6 +28,8 @@ class ListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val popupManager = PopupManager(getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater,  this)
+
         enableEdgeToEdge()
         setContentView(R.layout.list_activity)
 
@@ -52,22 +55,12 @@ class ListActivity : AppCompatActivity() {
 
         val btnAddItem : Button = findViewById(R.id.btnAddItem)
 
-        // inflate the layout of the popup window
-        val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val popupView: View = inflater.inflate(R.layout.popup_add, null)
-
-        // create the popup window
-        val width = LinearLayout.LayoutParams.WRAP_CONTENT
-        val height = LinearLayout.LayoutParams.WRAP_CONTENT
-        val focusable = true
-        val popupWindow = PopupWindow(popupView, width, height, focusable)
-
         btnAddItem.setOnClickListener{
-            // show the popup window
-            popupWindow.showAtLocation(this.window.decorView , Gravity.CENTER, 0, 0)
+            val header : ConstraintLayout= findViewById(R.id.header)
+            val popup = popupManager.createPopup(R.layout.popup_add_item, true)
 
-            val etItemHeader: EditText = popupView.findViewById(R.id.etItemHeader)
-            val btnSaveItem: Button = popupView.findViewById(R.id.btnSaveItem)
+            val etItemHeader: EditText = popup.popupView.findViewById(R.id.etItemHeader)
+            val btnSaveItem: Button = popup.popupView.findViewById(R.id.btnSaveItem)
 
             btnSaveItem.setOnClickListener {
                 val artikelTitle = etItemHeader.text.toString()
@@ -75,15 +68,15 @@ class ListActivity : AppCompatActivity() {
                     val item = ListItem(artikelTitle)
                     listAdapter.add(item)
                     etItemHeader.text.clear()
-                    popupWindow.dismiss()
+                    popup.popupWindow.dismiss()
                 }
             }
+        }
 
-            // dismiss the popup window when touched
-            popupView.setOnTouchListener { _, _ ->
-                popupWindow.dismiss()
-                true
-            }
+        val btnOpenMore: ImageButton = findViewById(R.id.btnMore)
+
+        btnOpenMore.setOnClickListener{
+            val popup = popupManager.createPopup(R.layout.popup_list_more, true, btnOpenMore, PopupAlignment.LEFT)
         }
     }
 

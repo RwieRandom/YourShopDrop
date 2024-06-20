@@ -1,9 +1,12 @@
 <resources>
     <string name="app_name">YourShopDrop</string>
+    <string name="title">Shoppinglist</string>
     <string name="next">next</string>
     <string name="back">back</string>
     <string name="save">save</string>
     <string name="add">add</string>
     <string name="add2">+</string>
-    <string name="title">Shoppinglist</string>
+    <string name="rename">rename</string>
+    <string name="clearList">clear</string>
+
 </resources>
