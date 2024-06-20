@@ -44,12 +44,8 @@ class PopupManager(private val inflater: LayoutInflater, private val context: Ac
         return Popup(popupView, popupWindow)
     }
 
-    private fun createPopup(layout: Int, canDismissOnTouch: Boolean, anchorView: View?):Popup{
-        return createPopup(layout, canDismissOnTouch, anchorView, PopupAlignment.CENTER)
-    }
-
     fun createPopup(layout: Int, canDismissOnTouch: Boolean):Popup{
-        val popup:Popup = createPopup(layout, canDismissOnTouch, null)
+        val popup:Popup = createPopup(layout, canDismissOnTouch, null, PopupAlignment.CENTER)
         popup.popupWindow.showAtLocation(context.window.decorView , Gravity.CENTER, 0, 0)
         return popup
     }
