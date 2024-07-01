@@ -54,7 +54,6 @@ class ListActivity : AppCompatActivity() {
 
 
         val btnAddItem : Button = findViewById(R.id.btnAddItem)
-
         btnAddItem.setOnClickListener{
             val header : ConstraintLayout= findViewById(R.id.header)
             val popup = popupManager.createPopup(R.layout.popup_add_item, true)
@@ -74,9 +73,22 @@ class ListActivity : AppCompatActivity() {
         }
 
         val btnOpenMore: ImageButton = findViewById(R.id.btnMore)
-
         btnOpenMore.setOnClickListener{
             val popup = popupManager.createPopup(R.layout.popup_list_more, true, btnOpenMore, PopupAlignment.LEFT)
+
+            val btnClearList : Button = popup.popupView.findViewById(R.id.btnClearList)
+            val btnRenameList : Button = popup.popupView.findViewById(R.id.btnRenameList)
+
+            btnClearList.setOnClickListener{
+                listAdapter.deleteCheckedItems()
+            }
+
+            btnRenameList.setOnClickListener{
+
+            }
+
+
+
         }
     }
 

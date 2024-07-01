@@ -25,6 +25,15 @@ class ListItemManager(context: Context, filename: String) {
         saveManager.deleteList()
     }
 
+    fun updateItem(item: ListItem, isChecked: Boolean) {
+        val items = loadItems()
+        val position = items.indexOf(item)
+        if (position != -1) {
+            items[position].isChecked = isChecked // Update the item
+            saveItems(items) // Save the changes
+        }
+    }
+
     fun getItemCount():Int{
         return loadItems().size
     }

@@ -1,5 +1,7 @@
 package de.your.yourshopdrop
 
+import android.annotation.SuppressLint
+import android.graphics.Paint
 import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
 import android.view.LayoutInflater
 import android.view.View
@@ -34,14 +36,40 @@ class ListAdapter (private val listItemManager: ListItemManager) : RecyclerView.
 
             itemTitle.text = currentItem.title
             checkBox.isChecked = currentItem.isChecked
-            /*checkBox.setOnCheckedChangeListener {_, isChecked ->
-                if(isChecked){
-                    listItemManager.removeItem(currentItem)
-                    notifyItemRemoved(listItemManager.getItemPosition(currentItem))
-                }
+            setStrikethrough(itemTitle, currentItem.isChecked)
 
+            checkBox.setOnCheckedChangeListener {_, isChecked ->
+               listItemManager.updateItem(currentItem, isChecked)
+
+                setStrikethrough(itemTitle, isChecked)
             }
-            currentItem.isChecked = !currentItem.isChecked*/
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun deleteCheckedItems() {
+        val itemsToDelete = mutableListOf<ListItem>()
+
+        // Find checked items
+        for (item in listItemManager.loadItems()) {
+            if (item.isChecked) {
+                itemsToDelete.add(item)
+            }
+        }
+
+        // Remove checked items
+        for (item in itemsToDelete) {
+            listItemManager.removeItem(item)
+        }
+
+        notifyDataSetChanged()
+    }
+
+    private fun setStrikethrough(textView: TextView, isChecked: Boolean) {
+        if (isChecked) {
+            textView.paintFlags = textView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+        } else {
+            textView.paintFlags = textView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
         }
     }
 }
