@@ -6,7 +6,8 @@
     <string name="save">save</string>
     <string name="add">add</string>
     <string name="add2">+</string>
-    <string name="rename">rename</string>
-    <string name="clearList">clear</string>
+    <string name="renameList">rename list</string>
+    <string name="clearList">clear list</string>
+    <string name="deleteList">Delete list</string>
 
 </resources>

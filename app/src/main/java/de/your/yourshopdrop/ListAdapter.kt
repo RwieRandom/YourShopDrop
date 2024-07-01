@@ -65,6 +65,12 @@ class ListAdapter (private val listItemManager: ListItemManager) : RecyclerView.
         notifyDataSetChanged()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun deleteList(){
+        listItemManager.deleteAllItems()
+        notifyDataSetChanged()
+    }
+
     private fun setStrikethrough(textView: TextView, isChecked: Boolean) {
         if (isChecked) {
             textView.paintFlags = textView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG

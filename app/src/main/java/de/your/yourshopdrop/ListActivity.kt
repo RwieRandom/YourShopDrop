@@ -2,15 +2,16 @@ package de.your.yourshopdrop
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.media.session.MediaSession.Token
 import android.os.Bundle
-import android.view.Gravity
+import android.os.IBinder
 import android.view.LayoutInflater
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.LinearLayout
-import android.widget.PopupWindow
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -51,7 +52,8 @@ class ListActivity : AppCompatActivity() {
         val rvItemList : RecyclerView = findViewById(R.id.rvItemList)
         rvItemList.adapter = listAdapter
         rvItemList.layoutManager = LinearLayoutManager(this)
-
+        val tvListTitle: TextView = findViewById(R.id.tvListTitle)
+        tvListTitle.text = loadTitle()
 
         val btnAddItem : Button = findViewById(R.id.btnAddItem)
         btnAddItem.setOnClickListener{
@@ -78,18 +80,68 @@ class ListActivity : AppCompatActivity() {
 
             val btnClearList : Button = popup.popupView.findViewById(R.id.btnClearList)
             val btnRenameList : Button = popup.popupView.findViewById(R.id.btnRenameList)
+            val btnDeleteList : Button = popup.popupView.findViewById(R.id.btnDeleteList)
 
             btnClearList.setOnClickListener{
                 listAdapter.deleteCheckedItems()
+                popup.popupWindow.dismiss()
             }
 
             btnRenameList.setOnClickListener{
-
+                renameHeader()
+                popup.popupWindow.dismiss()
             }
 
-
-
+            btnDeleteList.setOnClickListener {
+                listAdapter.deleteList()
+                popup.popupWindow.dismiss()
+            }
         }
+    }
+
+    private fun renameHeader(){
+        val tvListTitle: TextView = findViewById(R.id.tvListTitle)
+        val etListTitle: TextView = findViewById(R.id.etListTitle)
+        val btnConfirmRename: ImageButton = findViewById(R.id.btnConfirmRename)
+        val btnOpenMore: ImageButton = findViewById(R.id.btnMore)
+
+        tvListTitle.visibility = View.GONE
+        btnOpenMore.visibility = View.GONE
+        etListTitle.visibility = View.VISIBLE
+        btnConfirmRename.visibility = View.VISIBLE
+        etListTitle.setText(tvListTitle.text)
+
+        btnConfirmRename.setOnClickListener {
+            etListTitle.visibility = View.GONE
+            btnConfirmRename.visibility = View.GONE
+            tvListTitle.visibility = View.VISIBLE
+            btnOpenMore.visibility = View.VISIBLE
+
+            val title: String = etListTitle.text.toString()
+
+            saveTitle(title)
+            tvListTitle.text = title
+
+            hideKeyboard(etListTitle.windowToken)
+        }
+    }
+
+    private fun saveTitle(title: String) {
+        val sharedPref = getSharedPreferences("listPrefs", Context.MODE_PRIVATE)
+        with (sharedPref.edit()) {
+            putString("listTitle", title)
+            apply()
+        }
+    }
+
+    private fun loadTitle(): String {
+        val sharedPref = getSharedPreferences("listPrefs", Context.MODE_PRIVATE)
+        return sharedPref.getString("listTitle", "Title") ?: "Title"
+    }
+
+    fun hideKeyboard(windowToken: IBinder){
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
     }
 
 
