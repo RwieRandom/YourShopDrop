@@ -2,7 +2,6 @@ package de.your.yourshopdrop
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.media.session.MediaSession.Token
 import android.os.Bundle
 import android.os.IBinder
 import android.view.LayoutInflater
@@ -30,23 +29,11 @@ class ListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val popupManager = PopupManager(getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater,  this)
+        val listItemManager = ListItemManager(this, "items.json")
 
         enableEdgeToEdge()
         setContentView(R.layout.list_activity)
-
-        val contentLayout = findViewById<ConstraintLayout>(R.id.main)
-        ViewCompat.setOnApplyWindowInsetsListener(contentLayout) { view, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.updatePadding(
-                left = insets.left,
-                top = insets.top,
-                right = insets.right,
-                bottom = insets.bottom
-            )
-            windowInsets
-        }
-
-        val listItemManager = ListItemManager(this, "items.json")
+        defineSafeWindow();
 
         listAdapter = ListAdapter(listItemManager)
         val rvItemList : RecyclerView = findViewById(R.id.rvItemList)
@@ -57,45 +44,68 @@ class ListActivity : AppCompatActivity() {
 
         val btnAddItem : Button = findViewById(R.id.btnAddItem)
         btnAddItem.setOnClickListener{
-            val header : ConstraintLayout= findViewById(R.id.header)
-            val popup = popupManager.createPopup(R.layout.popup_add_item, true)
-
-            val etItemHeader: EditText = popup.popupView.findViewById(R.id.etItemHeader)
-            val btnSaveItem: Button = popup.popupView.findViewById(R.id.btnSaveItem)
-
-            btnSaveItem.setOnClickListener {
-                val artikelTitle = etItemHeader.text.toString()
-                if (artikelTitle.isNotEmpty()) {
-                    val item = ListItem(artikelTitle)
-                    listAdapter.add(item)
-                    etItemHeader.text.clear()
-                    popup.popupWindow.dismiss()
-                }
-            }
+            createAddWindow(popupManager)
         }
 
         val btnOpenMore: ImageButton = findViewById(R.id.btnMore)
         btnOpenMore.setOnClickListener{
-            val popup = popupManager.createPopup(R.layout.popup_list_more, true, btnOpenMore, PopupAlignment.LEFT)
+            createMorePopup(popupManager, btnOpenMore)
+        }
+    }
 
-            val btnClearList : Button = popup.popupView.findViewById(R.id.btnClearList)
-            val btnRenameList : Button = popup.popupView.findViewById(R.id.btnRenameList)
-            val btnDeleteList : Button = popup.popupView.findViewById(R.id.btnDeleteList)
+    private fun createAddWindow(popupManager: PopupManager){
+        val header: ConstraintLayout = findViewById(R.id.header)
+        val popup = popupManager.createPopup(R.layout.popup_add_item, true)
 
-            btnClearList.setOnClickListener{
-                listAdapter.deleteCheckedItems()
+        val etItemHeader: EditText = popup.popupView.findViewById(R.id.etItemHeader)
+        val btnSaveItem: Button = popup.popupView.findViewById(R.id.btnSaveItem)
+
+        btnSaveItem.setOnClickListener {
+            val artikelTitle = etItemHeader.text.toString()
+            if (artikelTitle.isNotEmpty()) {
+                val item = ListItem(artikelTitle)
+                listAdapter.add(item)
+                etItemHeader.text.clear()
+
+                hideKeyboard(etItemHeader.windowToken)
                 popup.popupWindow.dismiss()
             }
+        }
+    }
 
-            btnRenameList.setOnClickListener{
-                renameHeader()
-                popup.popupWindow.dismiss()
-            }
+    private fun createMorePopup(popupManager: PopupManager, btnOpenMore: ImageButton){
+        val popup = popupManager.createPopup(R.layout.popup_list_more, true, btnOpenMore, PopupAlignment.LEFT)
 
-            btnDeleteList.setOnClickListener {
-                listAdapter.deleteList()
-                popup.popupWindow.dismiss()
-            }
+        val btnClearList : Button = popup.popupView.findViewById(R.id.btnClearList)
+        btnClearList.setOnClickListener{
+            listAdapter.deleteCheckedItems()
+            popup.popupWindow.dismiss()
+        }
+
+        val btnRenameList : Button = popup.popupView.findViewById(R.id.btnRenameList)
+        btnRenameList.setOnClickListener{
+            renameHeader()
+            popup.popupWindow.dismiss()
+        }
+
+        val btnDeleteList : Button = popup.popupView.findViewById(R.id.btnDeleteList)
+        btnDeleteList.setOnClickListener {
+            listAdapter.deleteList()
+            popup.popupWindow.dismiss()
+        }
+    }
+
+    private fun defineSafeWindow(){
+        val contentLayout = findViewById<ConstraintLayout>(R.id.main)
+        ViewCompat.setOnApplyWindowInsetsListener(contentLayout) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.updatePadding(
+                left = insets.left,
+                top = insets.top,
+                right = insets.right,
+                bottom = insets.bottom
+            )
+            windowInsets
         }
     }
 
@@ -139,10 +149,8 @@ class ListActivity : AppCompatActivity() {
         return sharedPref.getString("listTitle", "Title") ?: "Title"
     }
 
-    fun hideKeyboard(windowToken: IBinder){
+    private fun hideKeyboard(windowToken: IBinder){
         val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
     }
-
-
 }

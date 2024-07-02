@@ -1,7 +1,6 @@
 package de.your.yourshopdrop
 
 import android.annotation.SuppressLint
-import android.graphics.Paint
 import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
 import android.view.LayoutInflater
 import android.view.View
@@ -28,7 +27,7 @@ class ListAdapter (private val listItemManager: ListItemManager) : RecyclerView.
     }
 
     override fun onBindViewHolder(holder: ArtikelViewHolder, position: Int) {
-        val currentItem = listItemManager.getItem(position);
+        val currentItem = listItemManager.getItem(position)
 
         holder.itemView.apply {
             val itemTitle = findViewById<TextView>(R.id.tvArtikelTitle)
@@ -73,9 +72,9 @@ class ListAdapter (private val listItemManager: ListItemManager) : RecyclerView.
 
     private fun setStrikethrough(textView: TextView, isChecked: Boolean) {
         if (isChecked) {
-            textView.paintFlags = textView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            textView.paintFlags = textView.paintFlags or STRIKE_THRU_TEXT_FLAG
         } else {
-            textView.paintFlags = textView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+            textView.paintFlags = textView.paintFlags and STRIKE_THRU_TEXT_FLAG.inv()
         }
     }
 }
