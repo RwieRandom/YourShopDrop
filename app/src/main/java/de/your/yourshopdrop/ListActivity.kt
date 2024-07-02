@@ -145,8 +145,9 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun loadTitle(): String {
+        val title: String = getString(R.string.title)
         val sharedPref = getSharedPreferences("listPrefs", Context.MODE_PRIVATE)
-        return sharedPref.getString("listTitle", "Title") ?: "Title"
+        return sharedPref.getString("listTitle", title) ?: title
     }
 
     private fun hideKeyboard(windowToken: IBinder){
