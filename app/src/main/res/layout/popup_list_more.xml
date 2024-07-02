@@ -20,6 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            app:iconSize="20dp"
             android:text="@string/renameList"
             app:icon="@drawable/rename"/>
 
@@ -33,6 +34,7 @@
             android:layout_alignEnd="@+id/btnRenameList"
             android:layout_marginStart="0dp"
             android:layout_marginTop="16dp"
+            app:iconSize="20dp"
             android:text="@string/clearList"
             app:icon="@drawable/clear" />
 
@@ -46,8 +48,9 @@
             android:layout_alignParentStart="true"
             android:layout_marginStart="0dp"
             android:layout_marginTop="16dp"
+            app:icon="@drawable/delete"
             android:text="@string/deleteList"
-            app:icon="@drawable/clear" />
+            app:iconSize="20dp" />
 
     </RelativeLayout>
 
