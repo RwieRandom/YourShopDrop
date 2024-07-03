@@ -9,5 +9,7 @@
     <string name="renameList">rename list</string>
     <string name="clearList">clear list</string>
     <string name="deleteList">Delete list</string>
+    <string name="description_ConfirmRename">Saves the title</string>
+    <string name="description_ShowMore">Shows more options for the list</string>
 
 </resources>

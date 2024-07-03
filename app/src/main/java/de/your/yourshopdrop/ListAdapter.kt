@@ -9,29 +9,29 @@ import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class ListAdapter (private val listItemManager: ListItemManager) : RecyclerView.Adapter<ListAdapter.ArtikelViewHolder>() {
+class ListAdapter (private val listItemManager: ListItemManager) : RecyclerView.Adapter<ListAdapter.ItemViewHolder>() {
 
-    class ArtikelViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     fun add(item: ListItem){
         listItemManager.addItem(item)
         notifyItemInserted(itemCount -1)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtikelViewHolder {
-        return ArtikelViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_artikel,parent,false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
+        return ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_artikel,parent,false))
     }
 
     override fun getItemCount(): Int {
         return listItemManager.getItemCount()
     }
 
-    override fun onBindViewHolder(holder: ArtikelViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val currentItem = listItemManager.getItem(position)
 
         holder.itemView.apply {
             val itemTitle = findViewById<TextView>(R.id.tvArtikelTitle)
-            val checkBox = findViewById<CheckBox>(R.id.cbArtikelDone)
+            val checkBox = findViewById<CheckBox>(R.id.cbItemChecked)
 
             itemTitle.text = currentItem.title
             checkBox.isChecked = currentItem.isChecked

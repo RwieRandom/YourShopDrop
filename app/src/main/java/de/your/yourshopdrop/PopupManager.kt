@@ -2,19 +2,11 @@ package de.your.yourshopdrop
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
-import android.util.DisplayMetrics
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.view.WindowManager
-import android.widget.Button
-import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.PopupWindow
-import androidx.annotation.LayoutRes
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.getSystemService
 
 
 class PopupManager(private val inflater: LayoutInflater, private val context: Activity) {

@@ -3,7 +3,7 @@ package de.your.yourshopdrop
 import android.content.Context
 
 class ListItemManager(context: Context, filename: String) {
-    var saveManager:SaveManager = SaveManager(context, filename)
+    private var saveManager:SaveManager = SaveManager(context, filename)
 
     private fun saveItems(list: MutableList<ListItem>) {
         saveManager.saveList(list)
@@ -43,8 +43,8 @@ class ListItemManager(context: Context, filename: String) {
         return items[position]
     }
 
-    fun getItemPosition(item: ListItem):Int{
+    /*fun getItemPosition(item: ListItem):Int{
         val items: MutableList<ListItem> = loadItems()
         return items.indexOf(item)
-    }
+    }*/
 }

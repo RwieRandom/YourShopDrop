@@ -33,7 +33,7 @@ class ListActivity : AppCompatActivity() {
 
         enableEdgeToEdge()
         setContentView(R.layout.list_activity)
-        defineSafeWindow();
+        defineSafeWindow()
 
         listAdapter = ListAdapter(listItemManager)
         val rvItemList : RecyclerView = findViewById(R.id.rvItemList)
@@ -54,16 +54,16 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun createAddWindow(popupManager: PopupManager){
-        val header: ConstraintLayout = findViewById(R.id.header)
+        //val header: ConstraintLayout = findViewById(R.id.header)
         val popup = popupManager.createPopup(R.layout.popup_add_item, true)
 
         val etItemHeader: EditText = popup.popupView.findViewById(R.id.etItemHeader)
         val btnSaveItem: Button = popup.popupView.findViewById(R.id.btnSaveItem)
 
         btnSaveItem.setOnClickListener {
-            val artikelTitle = etItemHeader.text.toString()
-            if (artikelTitle.isNotEmpty()) {
-                val item = ListItem(artikelTitle)
+            val itemTitle = etItemHeader.text.toString()
+            if (itemTitle.isNotEmpty()) {
+                val item = ListItem(itemTitle)
                 listAdapter.add(item)
                 etItemHeader.text.clear()
 
@@ -119,7 +119,7 @@ class ListActivity : AppCompatActivity() {
         btnOpenMore.visibility = View.GONE
         etListTitle.visibility = View.VISIBLE
         btnConfirmRename.visibility = View.VISIBLE
-        etListTitle.setText(tvListTitle.text)
+        etListTitle.text = tvListTitle.text
 
         btnConfirmRename.setOnClickListener {
             etListTitle.visibility = View.GONE
