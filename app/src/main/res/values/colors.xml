@@ -2,10 +2,31 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="app_background">#F4F4F4</color>
+    <color name="content_background">#FFFFFF</color>
+    <color name="background_button">#000000</color>
+    <color name="text_color_on_dark">#FFFFFF</color>
+    <color name="text_color_on_light">#000000</color>
+
     <color name="background_popup">#E4DDEDFA</color>
 
 
-    <color name="light_background">#F1F8FF</color>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <color name="light_on_background">#000000</color>
     <color name="light_primary">#A7D1F3</color>
     <color name="light_primary_variant">#212121</color>

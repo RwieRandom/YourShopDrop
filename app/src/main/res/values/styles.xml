@@ -15,6 +15,13 @@
         <item name="backgroundTint">@android:color/transparent</item>
     </style>
 
+    <style name="AddButton" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/background_button</item>
+        <item name="elevation">4sp</item>
+        <item name="android:textColor">@color/text_color_on_dark</item>
+        <item name="android:textSize">25sp</item>
+    </style>
+
 
 
 </resources>
