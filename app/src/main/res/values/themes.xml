@@ -1,5 +1,5 @@
 <resources>
-    <style name="AppTheme.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="AppTheme.Light" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="backgroundColor">@color/light_background</item>
         <item name="backgroundInfoColor">@color/light_background_info</item>
         <item name="backgroundSelectedColor">@color/light_background_selected</item>

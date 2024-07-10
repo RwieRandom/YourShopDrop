@@ -13,6 +13,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -34,6 +35,9 @@ class ListActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.list_activity)
         defineSafeWindow()
+
+        // Automatischer Wechsel zwischen Light und Dark Mode
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
 
         listAdapter = ListAdapter(listItemManager)
         val rvItemList : RecyclerView = findViewById(R.id.rvItemList)
