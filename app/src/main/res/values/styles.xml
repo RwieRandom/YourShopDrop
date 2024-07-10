@@ -16,9 +16,9 @@
     </style>
 
     <style name="AddButton" parent="Widget.MaterialComponents.Button">
-        <item name="backgroundTint">@color/light_button</item>
+        <item name="backgroundTint">?attr/buttonColor</item>
         <item name="elevation">4sp</item>
-        <item name="android:textColor">@color/text_color_on_dark</item>
+        <item name="android:textColor">?attr/textOnButtonColor</item>
         <item name="android:textSize">25sp</item>
     </style>
 
