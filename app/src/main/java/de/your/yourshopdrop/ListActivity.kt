@@ -36,6 +36,9 @@ class ListActivity : AppCompatActivity() {
         setContentView(R.layout.list_activity)
         defineSafeWindow()
 
+
+        //TODO: Darkmode/Lightmode
+
         // Automatischer Wechsel zwischen Light und Dark Mode
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
 
