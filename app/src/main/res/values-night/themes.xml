@@ -1,14 +1,15 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+<resources>
     <style name="AppTheme.Dark" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/dark_primary</item>
-        <item name="colorPrimaryVariant">@color/dark_primary_variant</item>
-        <item name="colorOnPrimary">@color/dark_on_primary</item>
-        <item name="colorSecondary">@color/dark_secondary</item>
-        <item name="colorSecondaryVariant">@color/dark_secondary_variant</item>
-        <item name="colorOnSecondary">@color/dark_on_secondary</item>
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <item name="android:windowBackground">@color/dark_background</item>
-        <!-- Other attributes you want to customize -->
+        <item name="backgroundColor">@color/dark_background</item>
+        <item name="backgroundInfoColor">@color/dark_background_info</item>
+        <item name="backgroundSelectedColor">@color/dark_background_selected</item>
+        <item name="primaryColor">@color/dark_primary</item>
+        <item name="buttonColor">@color/dark_button</item>
+        <item name="textTitleColor">@color/dark_text_title</item>
+        <item name="textBodyColor">@color/dark_text_body</item>
+        <item name="textPlaceholderColor">@color/dark_text_placeholder</item>
+        <item name="textOnButtonColor">@color/dark_text_on_button</item>
+        <item name="textOnInfoColor">@color/dark_text_on_info</item>
+        <item name="textOnSelectedColor">@color/dark_text_on_selected</item>
     </style>
 </resources>

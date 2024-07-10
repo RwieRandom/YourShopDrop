@@ -2,28 +2,30 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
     <color name="background_popup">#E4DDEDFA</color>
 
+    <color name="light_background">#FFFFFF</color>
+    <color name="light_background_info">#12171C</color>
+    <color name="light_background_selected">#140070F2</color>
+    <color name="light_primary">#FFFFFF</color>
+    <color name="light_button">#0070F2</color>
+    <color name="light_text_title">#223548</color>
+    <color name="light_text_body">#475E75</color>
+    <color name="light_text_placeholder">#5B738B</color>
+    <color name="light_text_on_button">#FFFFFF</color>
+    <color name="light_text_on_info">#4DB1FF</color>
+    <color name="light_text_on_selected">#0057D2</color>
 
-    <color name="light_background">#F1F8FF</color>
-    <color name="light_on_background">#000000</color>
-    <color name="light_primary">#A7D1F3</color>
-    <color name="light_primary_variant">#212121</color>
-    <color name="light_on_primary">#424242</color>
-    <color name="light_secondary">#757575</color>
-    <color name="light_secondary_variant">#9E9E9E</color>
-    <color name="light_on_secondary">#FFFFFF</color>
-    <color name="light_surface">#FFFFFF</color>
-    <color name="light_on_surface">#000000</color>
-
-    <color name="dark_primary">#FFFFFF</color>
-    <color name="dark_primary_variant">#EEEEEE</color>
-    <color name="dark_on_primary">#000000</color>
-    <color name="dark_secondary">#9E9E9E</color>
-    <color name="dark_secondary_variant">#757575</color>
-    <color name="dark_on_secondary">#000000</color>
-    <color name="dark_background">#000000</color>
-    <color name="dark_on_background">#FFFFFF</color>
-    <color name="dark_surface">#121212</color>
-    <color name="dark_on_surface">#FFFFFF</color>
+    <color name="dark_background">#7198BF</color>
+    <color name="dark_background_info">#FFFFFF</color>
+    <color name="dark_background_selected">#334DB1FF</color>
+    <color name="dark_primary">#14171A</color>
+    <color name="dark_button">#4DB1FF</color>
+    <color name="dark_text_title">#F5F6F7</color>
+    <color name="dark_text_body">#475E75</color>
+    <color name="dark_text_placeholder">#A9B4BE</color>
+    <color name="dark_text_on_button">#12171C</color>
+    <color name="dark_text_on_info">#0070F2</color>
+    <color name="dark_text_on_selected">#89D1FF</color>
 </resources>
