@@ -36,18 +36,17 @@
         app:layout_constraintTop_toBottomOf="@+id/header">
 
         <include
-            android:id="@+id/include"
+            android:id="@+id/includeInputItem"
             layout="@layout/list_input_item"
             android:visibility="gone" />
 
         <ScrollView
-            android:id="@+id/scrollView2"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include">
+            app:layout_constraintTop_toBottomOf="@+id/includeInputItem">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvItemList"

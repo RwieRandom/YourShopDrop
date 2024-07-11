@@ -31,13 +31,13 @@
         android:textColor="?attr/textTitleColor"
         android:gravity="center_vertical|start"
         android:inputType="text"
+        android:hint="@string/title"
         android:visibility="gone"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btnMore"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="LabelFor" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/btnMore"

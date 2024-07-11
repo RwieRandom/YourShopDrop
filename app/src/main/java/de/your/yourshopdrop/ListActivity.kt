@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.os.IBinder
-import android.renderscript.ScriptGroup.Input
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -15,7 +14,6 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -69,11 +67,12 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun showInputLine(){
-        val inputItem: View = findViewById(R.id.include)
+        //TODO: animations
+        val inputItem: View = findViewById(R.id.includeInputItem)
         inputItem.visibility = View.VISIBLE
 
         val editText: EditText = findViewById(R.id.etItemTitleInput)
-        editText.setOnEditorActionListener { v, actionId, event ->
+        editText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 val title = editText.text.toString()
                 if(title.isNotEmpty()){
