@@ -4,8 +4,10 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.os.IBinder
+import android.renderscript.ScriptGroup.Input
 import android.view.LayoutInflater
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
@@ -31,27 +33,25 @@ class ListActivity : AppCompatActivity() {
 
         val popupManager = PopupManager(getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater,  this)
         val listItemManager = ListItemManager(this, "items.json")
+        listAdapter = ListAdapter(listItemManager)
+
 
         enableEdgeToEdge()
         setContentView(R.layout.list_activity)
         defineSafeWindow()
 
-
+        /*
         //TODO: Darkmode/Lightmode
 
         // Automatischer Wechsel zwischen Light und Dark Mode
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        */
 
-        listAdapter = ListAdapter(listItemManager)
-        val rvItemList : RecyclerView = findViewById(R.id.rvItemList)
-        rvItemList.adapter = listAdapter
-        rvItemList.layoutManager = LinearLayoutManager(this)
-        val tvListTitle: TextView = findViewById(R.id.tvListTitle)
-        tvListTitle.text = loadTitle()
+        setupList()
 
         val btnAddItem : Button = findViewById(R.id.btnAddItem)
         btnAddItem.setOnClickListener{
-            createAddWindow(popupManager)
+            showInputLine()
         }
 
         val btnOpenMore: ImageButton = findViewById(R.id.btnMore)
@@ -60,24 +60,38 @@ class ListActivity : AppCompatActivity() {
         }
     }
 
-    private fun createAddWindow(popupManager: PopupManager){
-        //val header: ConstraintLayout = findViewById(R.id.header)
-        val popup = popupManager.createPopup(R.layout.popup_add_item, true)
+    private fun setupList(){
+        val rvItemList : RecyclerView = findViewById(R.id.rvItemList)
+        rvItemList.adapter = listAdapter
+        rvItemList.layoutManager = LinearLayoutManager(this)
+        val tvListTitle: TextView = findViewById(R.id.tvListTitle)
+        tvListTitle.text = loadTitle()
+    }
 
-        val etItemHeader: EditText = popup.popupView.findViewById(R.id.etItemHeader)
-        val btnSaveItem: Button = popup.popupView.findViewById(R.id.btnSaveItem)
+    private fun showInputLine(){
+        val inputItem: View = findViewById(R.id.include)
+        inputItem.visibility = View.VISIBLE
 
-        btnSaveItem.setOnClickListener {
-            val itemTitle = etItemHeader.text.toString()
-            if (itemTitle.isNotEmpty()) {
-                val item = ListItem(itemTitle)
-                listAdapter.add(item)
-                etItemHeader.text.clear()
-
-                hideKeyboard(etItemHeader.windowToken)
-                popup.popupWindow.dismiss()
-            }
+        val editText: EditText = findViewById(R.id.etItemTitleInput)
+        editText.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                val title = editText.text.toString()
+                if(title.isNotEmpty()){
+                    listAdapter.add(ListItem(title))
+                    hideEditText(inputItem, editText)
+                } else {
+                    hideEditText(inputItem, editText)
+                }
+                true
+            } else { false}
         }
+    }
+
+    private fun hideEditText(parent : View, editText: EditText){
+        hideKeyboard(editText.windowToken)
+        editText.text.clear()
+        editText.clearFocus()
+        parent.visibility = View.GONE
     }
 
     private fun createMorePopup(popupManager: PopupManager, btnOpenMore: ImageButton){

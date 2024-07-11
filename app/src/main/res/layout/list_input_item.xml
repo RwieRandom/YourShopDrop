@@ -6,25 +6,18 @@
     android:paddingStart="8dp"
     android:paddingEnd="8dp">
 
-    <TextView
-        android:id="@+id/tvArtikelTitle"
+    <EditText
+        android:id="@+id/etItemTitleInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:textColor="?attr/textBodyColor"
         android:ellipsize="end"
+        android:inputType="text"
         android:singleLine="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/cbItemChecked"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <CheckBox
-        android:id="@+id/cbItemChecked"
-        android:layout_width="48dp"
-        android:layout_height="wrap_content"
+        android:textColor="?attr/textBodyColor"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

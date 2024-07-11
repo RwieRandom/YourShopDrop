@@ -19,7 +19,7 @@ class ListAdapter (private val listItemManager: ListItemManager) : RecyclerView.
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        return ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_artikel,parent,false))
+        return ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item,parent,false))
     }
 
     override fun getItemCount(): Int {
@@ -30,7 +30,7 @@ class ListAdapter (private val listItemManager: ListItemManager) : RecyclerView.
         val currentItem = listItemManager.getItem(position)
 
         holder.itemView.apply {
-            val itemTitle = findViewById<TextView>(R.id.tvArtikelTitle)
+            val itemTitle = findViewById<TextView>(R.id.tvItemTitle)
             val checkBox = findViewById<CheckBox>(R.id.cbItemChecked)
 
             itemTitle.text = currentItem.title
