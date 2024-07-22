@@ -1,15 +1,10 @@
 <resources>
-    <style name="AppTheme.Dark" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="backgroundColor">@color/dark_background</item>
-        <item name="backgroundInfoColor">@color/dark_background_info</item>
-        <item name="backgroundSelectedColor">@color/dark_background_selected</item>
-        <item name="primaryColor">@color/dark_primary</item>
-        <item name="buttonColor">@color/dark_button</item>
-        <item name="textTitleColor">@color/dark_text_title</item>
-        <item name="textBodyColor">@color/dark_text_body</item>
-        <item name="textPlaceholderColor">@color/dark_text_placeholder</item>
-        <item name="textOnButtonColor">@color/dark_text_on_button</item>
-        <item name="textOnInfoColor">@color/dark_text_on_info</item>
-        <item name="textOnSelectedColor">@color/dark_text_on_selected</item>
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/dark_Primary</item>
+        <item name="colorOnPrimary">@color/dark_OnPrimary</item>
+        <item name="colorSecondary">@color/dark_Secondary</item>
+        <item name="colorOnSecondary">@color/dark_OnSecondary</item>
+        <item name="android:colorBackground">@color/dark_Background</item>
+        <item name="colorOnBackground">@color/dark_OnBackground</item>
     </style>
 </resources>

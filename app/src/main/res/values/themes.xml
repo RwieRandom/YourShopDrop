@@ -1,15 +1,10 @@
 <resources>
-    <style name="AppTheme.Light" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="backgroundColor">@color/light_background</item>
-        <item name="backgroundInfoColor">@color/light_background_info</item>
-        <item name="backgroundSelectedColor">@color/light_background_selected</item>
-        <item name="primaryColor">@color/light_primary</item>
-        <item name="buttonColor">@color/light_button</item>
-        <item name="textTitleColor">@color/light_text_title</item>
-        <item name="textBodyColor">@color/light_text_body</item>
-        <item name="textPlaceholderColor">@color/light_text_placeholder</item>
-        <item name="textOnButtonColor">@color/light_text_on_button</item>
-        <item name="textOnInfoColor">@color/light_text_on_info</item>
-        <item name="textOnSelectedColor">@color/light_text_on_selected</item>
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/light_Primary</item>
+        <item name="colorOnPrimary">@color/light_OnPrimary</item>
+        <item name="colorSecondary">@color/light_Secondary</item>
+        <item name="colorOnSecondary">@color/light_OnSecondary</item>
+        <item name="android:colorBackground">@color/light_Background</item>
+        <item name="colorOnBackground">@color/light_OnBackground</item>
     </style>
 </resources>
