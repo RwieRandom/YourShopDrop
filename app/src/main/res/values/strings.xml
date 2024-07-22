@@ -13,4 +13,8 @@
     <string name="description_ConfirmRename">Saves the title</string>
     <string name="description_ShowMore">Shows more options for the list</string>
 
+
+    <string name="description_AddItems">Adds items to the list</string>">
+    <string name="description_ShowLists">Shows a list of all your lists</string>
+    <string name="description_ShowSettings">Shows the settings</string>
 </resources>

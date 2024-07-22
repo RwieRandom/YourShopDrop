@@ -11,14 +11,11 @@
         <item name="android:paddingTop">10sp</item>
     </style>
 
-    <style name="ButtonNoBackground" parent="ButtonBase">
-        <item name="backgroundTint">@android:color/transparent</item>
-    </style>
-
-    <style name="AddButton" parent="Widget.MaterialComponents.Button">
-        <item name="backgroundTint">?attr/buttonColor</item>
+    <style name="AddButton" parent="Widget.AppCompat.ImageButton">
+        <item name="backgroundTint">?attr/colorPrimary</item>
+        <item name="cornerRadius">25dp</item>
         <item name="elevation">4sp</item>
-        <item name="android:textColor">?attr/textOnButtonColor</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="android:textSize">25sp</item>
     </style>
 

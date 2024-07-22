@@ -16,7 +16,6 @@
         android:ellipsize="end"
         android:inputType="text"
         android:singleLine="true"
-        android:textColor="?attr/textBodyColor"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
