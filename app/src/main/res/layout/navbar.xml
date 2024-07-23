@@ -23,6 +23,7 @@
         android:contentDescription="@string/description_AddItems"
         android:src="@drawable/add"
         android:background="@drawable/button_add"
+        android:elevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
