@@ -1,24 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="ButtonBase" parent="Widget.MaterialComponents.Button">
-        <item name="android:textSize">15sp</item>
-        <item name="cornerRadius">100dp</item>
-        <item name="backgroundTint">?attr/colorPrimary</item>
-        <item name="android:textColor">?attr/colorOnPrimary</item>
-        <item name="android:paddingStart">10sp</item>
-        <item name="android:paddingEnd">10sp</item>
-        <item name="android:paddingBottom">10sp</item>
-        <item name="android:paddingTop">10sp</item>
-    </style>
-
-    <style name="AddButton" parent="Widget.AppCompat.ImageButton">
-        <item name="backgroundTint">?attr/colorPrimary</item>
-        <item name="cornerRadius">25dp</item>
-        <item name="elevation">4sp</item>
-        <item name="android:textColor">?attr/colorOnPrimary</item>
-        <item name="android:textSize">25sp</item>
-    </style>
-
 
 
 </resources>
