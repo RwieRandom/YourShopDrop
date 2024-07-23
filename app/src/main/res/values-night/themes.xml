@@ -4,6 +4,7 @@
         <item name="colorOnPrimary">@color/dark_OnPrimary</item>
         <item name="colorSecondary">@color/dark_Secondary</item>
         <item name="colorOnSecondary">@color/dark_OnSecondary</item>
+        <item name="colorTertiary">@color/dark_Tertiary</item>
         <item name="android:colorBackground">@color/dark_Background</item>
         <item name="colorOnBackground">@color/dark_OnBackground</item>
     </style>

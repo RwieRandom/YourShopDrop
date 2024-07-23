@@ -4,6 +4,7 @@
         <item name="colorOnPrimary">@color/light_OnPrimary</item>
         <item name="colorSecondary">@color/light_Secondary</item>
         <item name="colorOnSecondary">@color/light_OnSecondary</item>
+        <item name="colorTertiary">@color/light_Tertiary</item>
         <item name="android:colorBackground">@color/light_Background</item>
         <item name="colorOnBackground">@color/light_OnBackground</item>
     </style>
