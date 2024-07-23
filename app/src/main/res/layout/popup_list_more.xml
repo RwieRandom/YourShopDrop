@@ -32,8 +32,7 @@
             android:layout_marginStart="0dp"
             android:layout_marginTop="16dp"
             app:iconSize="20dp"
-            android:text="@string/clearList"
-            app:icon="@drawable/clear" />
+            android:text="@string/clearList"/>
 
         <Button
             android:id="@+id/btnDeleteList"
