@@ -21,7 +21,8 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!--<androidx.constraintlayout.widget.ConstraintLayout
+    <!-- TODO: fix this layout -> App stürzt ab
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="?attr/backgroundColor"
