@@ -21,11 +21,10 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- TODO: fix this layout -> App stürzt ab
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="?attr/backgroundColor"
+        android:background="?android:attr/colorBackground"
         android:paddingHorizontal="12dp"
         android:paddingTop="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -33,18 +32,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header">
 
-        <include
-            android:id="@+id/includeInputItem"
-            layout="@layout/list_input_item"
-            android:visibility="gone" />
-
         <ScrollView
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/includeInputItem">
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvItemList"
@@ -52,7 +46,7 @@
                 android:layout_height="wrap_content" />
 
         </ScrollView>
-    </androidx.constraintlayout.widget.ConstraintLayout> -->
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/navbar"

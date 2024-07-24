@@ -4,17 +4,21 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.os.IBinder
-import android.view.LayoutInflater
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.Button
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 
 class ListActivity : AppCompatActivity() {
@@ -33,11 +37,11 @@ class ListActivity : AppCompatActivity() {
         setContentView(R.layout.screen_main)
         defineSafeWindow()
 
-//        setupList()
+        setupList()
 
         val btnAddItem : ImageButton = findViewById(R.id.btnAddItem)
         btnAddItem.setOnClickListener{
-            popupManager.createPopup(R.layout.screen_lists, true)
+            createOverlayAddItem(popupManager)
         }
 //
 //        val btnOpenMore: ImageButton = findViewById(R.id.btnMore)
@@ -46,13 +50,45 @@ class ListActivity : AppCompatActivity() {
 //        }
     }
 
-//    private fun setupList(){
-//        val rvItemList : RecyclerView = findViewById(R.id.rvItemList)
-//        rvItemList.adapter = listAdapter
-//        rvItemList.layoutManager = LinearLayoutManager(this)
-//        val tvListTitle: TextView = findViewById(R.id.tvListTitle)
-//        tvListTitle.text = loadTitle()
-//    }
+    private fun setupList(){
+        val rvItemList : RecyclerView = findViewById(R.id.rvItemList)
+        rvItemList.adapter = listAdapter
+        rvItemList.layoutManager = LinearLayoutManager(this)
+        val tvListTitle: TextView = findViewById(R.id.tvListTitle)
+        tvListTitle.text = loadTitle()
+    }
+
+    private fun createOverlayAddItem(popupManager: PopupManager) {
+        val popup = popupManager.createPopup(R.layout.screen_lists, true)
+
+        val editText: EditText = popup.popupView.findViewById(R.id.input_new_item)
+
+        val btnConfirm: Button = popup.popupView.findViewById(R.id.btnScreenConfirm)
+        btnConfirm.setOnClickListener {
+            if (editText.text.isNotEmpty()) {
+                listAdapter.add(ListItem(editText.text.toString()))
+                editText.text.clear()
+                popup.popupWindow.dismiss()
+            } else {
+                popup.popupWindow.dismiss()
+            }
+        }
+
+        editText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                btnConfirm.performClick()
+                true
+            } else {
+                false
+            }
+        }
+
+        val btnCancel: Button = popup.popupView.findViewById(R.id.btnScreenCancel)
+        btnCancel.setOnClickListener {
+            popup.popupWindow.dismiss()
+        }
+
+    }
 
 //    private fun showInputLine(){
 //        //TODO: animations
@@ -74,12 +110,12 @@ class ListActivity : AppCompatActivity() {
 //        }
 //    }
 
-    private fun hideEditText(parent : View, editText: EditText){
-        hideKeyboard(editText.windowToken)
-        editText.text.clear()
-        editText.clearFocus()
-        parent.visibility = View.GONE
-    }
+        private fun hideEditText(parent: View, editText: EditText) {
+            hideKeyboard(editText.windowToken)
+            editText.text.clear()
+            editText.clearFocus()
+            parent.visibility = View.GONE
+        }
 
 //    private fun createMorePopup(popupManager: PopupManager, btnOpenMore: ImageButton){
 //        val popup = popupManager.createPopup(R.layout.popup_list_more, true, btnOpenMore, PopupAlignment.LEFT)
@@ -103,19 +139,19 @@ class ListActivity : AppCompatActivity() {
 //        }
 //    }
 
-    private fun defineSafeWindow(){
-        val contentLayout = findViewById<ConstraintLayout>(R.id.main)
-        ViewCompat.setOnApplyWindowInsetsListener(contentLayout) { view, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.updatePadding(
-                left = insets.left,
-                top = insets.top,
-                right = insets.right,
-                bottom = insets.bottom
-            )
-            windowInsets
+        private fun defineSafeWindow() {
+            val contentLayout = findViewById<ConstraintLayout>(R.id.main)
+            ViewCompat.setOnApplyWindowInsetsListener(contentLayout) { view, windowInsets ->
+                val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+                view.updatePadding(
+                    left = insets.left,
+                    top = insets.top,
+                    right = insets.right,
+                    bottom = insets.bottom
+                )
+                windowInsets
+            }
         }
-    }
 
 //    private fun renameHeader(){
 //        val tvListTitle: TextView = findViewById(R.id.tvListTitle)
@@ -144,22 +180,24 @@ class ListActivity : AppCompatActivity() {
 //        }
 //    }
 
-    private fun saveTitle(title: String) {
-        val sharedPref = getSharedPreferences("listPrefs", Context.MODE_PRIVATE)
-        with (sharedPref.edit()) {
-            putString("listTitle", title)
-            apply()
+        private fun saveTitle(title: String) {
+            val sharedPref = getSharedPreferences("listPrefs", Context.MODE_PRIVATE)
+            with(sharedPref.edit()) {
+                putString("listTitle", title)
+                apply()
+            }
         }
-    }
 
-    private fun loadTitle(): String {
-        val title: String = getString(R.string.placeholder_title)
-        val sharedPref = getSharedPreferences("listPrefs", Context.MODE_PRIVATE)
-        return sharedPref.getString("listTitle", title) ?: title
-    }
+        private fun loadTitle(): String {
+            val title: String = getString(R.string.placeholder_title)
+            val sharedPref = getSharedPreferences("listPrefs", Context.MODE_PRIVATE)
+            return sharedPref.getString("listTitle", title) ?: title
+        }
 
-    private fun hideKeyboard(windowToken: IBinder){
-        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
-    }
+        private fun hideKeyboard(windowToken: IBinder) {
+            val inputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
+        }
+
 }
