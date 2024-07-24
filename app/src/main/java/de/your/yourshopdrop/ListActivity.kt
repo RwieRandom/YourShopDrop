@@ -6,20 +6,15 @@ import android.os.Bundle
 import android.os.IBinder
 import android.view.LayoutInflater
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 
 
 class ListActivity : AppCompatActivity() {
@@ -29,28 +24,21 @@ class ListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val popupManager = PopupManager(getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater,  this)
+        val popupManager = PopupManager(this)
         val listItemManager = ListItemManager(this, "items.json")
         listAdapter = ListAdapter(listItemManager)
 
 
         enableEdgeToEdge()
-        setContentView(R.layout.list_activity)
+        setContentView(R.layout.screen_main)
         defineSafeWindow()
-
-        /*
-        //TODO: Darkmode/Lightmode
-
-        // Automatischer Wechsel zwischen Light und Dark Mode
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-        */
 
 //        setupList()
 
-//        val btnAddItem : Button = findViewById(R.id.btnAddItem)
-//        btnAddItem.setOnClickListener{
-//            showInputLine()
-//        }
+        val btnAddItem : ImageButton = findViewById(R.id.btnAddItem)
+        btnAddItem.setOnClickListener{
+            popupManager.createPopup(R.layout.screen_lists, true)
+        }
 //
 //        val btnOpenMore: ImageButton = findViewById(R.id.btnMore)
 //        btnOpenMore.setOnClickListener{
@@ -165,7 +153,7 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun loadTitle(): String {
-        val title: String = getString(R.string.title)
+        val title: String = getString(R.string.placeholder_title)
         val sharedPref = getSharedPreferences("listPrefs", Context.MODE_PRIVATE)
         return sharedPref.getString("listTitle", title) ?: title
     }
