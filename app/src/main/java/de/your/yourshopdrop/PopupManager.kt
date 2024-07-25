@@ -22,15 +22,14 @@ class PopupManager(private val context: Activity) {
 
         val width = LinearLayout.LayoutParams.MATCH_PARENT
         val height = LinearLayout.LayoutParams.WRAP_CONTENT
-        val focusable = true
-        val popupWindow = PopupWindow(popupView, width, height, focusable)
+        val popupWindow = PopupWindow(popupView, width, height, false)
 
-        if (canDismissOnTouch) {
-            popupView.setOnTouchListener { _, _ ->
-                popupWindow.dismiss()
-                true
-            }
-        }
+//        if (canDismissOnTouch) {
+//            popupView.setOnTouchListener { _, _ ->
+//                popupWindow.dismiss()
+//                true
+//            }
+//        }
         popupWindow.showAtLocation(context.window.decorView, Gravity.TOP, 0, 0)
 
         return Popup(popupView, popupWindow)
