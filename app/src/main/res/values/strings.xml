@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">YourShopDrop</string>
-    <string name="placeholder_title">Shoppinglist</string>
+
     <string name="settings">Settings</string>
     <string name="lists">Your Lists</string>
+    <string name="item_add">Add Item</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
-    <string name="item_add">Add Item</string>
     <string name="item_name">Itemname</string>
 
 
@@ -13,4 +13,8 @@
     <string name="description_ShowLists">Shows a list of all your lists</string>
     <string name="description_ShowSettings">Shows the settings</string>
     <string name="description_CloseScreen">Closes the current screen</string>
+
+    <string name="placeholder_title">Shoppinglist</string>
+    <string name="placeholder_listitem">Item</string>
+    <string name="placeholder_header">List/Settings</string>
 </resources>

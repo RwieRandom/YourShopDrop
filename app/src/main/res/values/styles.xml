@@ -13,4 +13,9 @@
         <item name="android:layout_marginBottom">30dp</item>
     </style>
 
+    <style name="Item" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">?attr/colorOnBackground</item>
+    </style>
+
 </resources>

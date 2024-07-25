@@ -59,7 +59,7 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun createOverlayAddItem(popupManager: PopupManager) {
-        val popup = popupManager.createPopup(R.layout.screen_lists, true)
+        val popup = popupManager.createPopup(R.layout.screen_additem, true)
 
         val editText: EditText = popup.popupView.findViewById(R.id.input_new_item)
 
