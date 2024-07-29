@@ -1,5 +1,6 @@
 package de.your.yourshopdrop
 
+import SwipeActions
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.RenderEffect
@@ -7,6 +8,7 @@ import android.graphics.Shader
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
+import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -22,8 +24,10 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputLayout
 
 
 class ListActivity : AppCompatActivity() {
@@ -68,6 +72,32 @@ class ListActivity : AppCompatActivity() {
         rvItemList.layoutManager = LinearLayoutManager(this)
         val tvListTitle: TextView = findViewById(R.id.tvListTitle)
         tvListTitle.text = loadTitle()
+
+        val callback = SwipeActions(listAdapter)
+        val itemTouchHelper = ItemTouchHelper(callback)
+
+        itemTouchHelper.attachToRecyclerView(rvItemList)
+
+        val swipeActions = SwipeActions(listAdapter)
+
+        rvItemList.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
+            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                if (swipeActions.swipedViewHolder != null) {
+                    val touchedView = rv.findChildViewUnder(e.x, e.y)
+                    if (touchedView == null || touchedView != swipeActions.swipedViewHolder?.itemView) {
+                        // Swipe zurücksetzen
+                        listAdapter.notifyItemChanged(swipeActions.swipedViewHolder!!.adapterPosition)
+                        swipeActions.swipedViewHolder = null
+                        return true
+                    }
+                }
+                return false
+            }
+
+            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {}
+
+            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
+        })
     }
 
 
@@ -104,7 +134,6 @@ class ListActivity : AppCompatActivity() {
         }
 
         currentActivePopup = popup.popupWindow
-
     }
 
     private fun hideScreen(screen: PopupWindow?){

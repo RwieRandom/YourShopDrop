@@ -12,6 +12,8 @@ material = "1.10.0"
 activity = "1.9.0"
 constraintlayout = "2.1.4"
 materialVersion = "1.12.0"
+swipeRevealLayout = "1.4.1"
+uiGraphicsAndroid = "1.6.8"
 
 [libraries]
 androidx-cardview = { module = "androidx.cardview:cardview", version.ref = "cardview" }
@@ -25,6 +27,8 @@ material = { group = "com.google.android.material", name = "material", version.r
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 material-v1120 = { module = "com.google.android.material:material", version.ref = "materialVersion" }
+swipe-reveal-layout = { module = "com.chauthai.swipereveallayout:swipe-reveal-layout", version.ref = "swipeRevealLayout" }
+androidx-ui-graphics-android = { group = "androidx.compose.ui", name = "ui-graphics-android", version.ref = "uiGraphicsAndroid" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

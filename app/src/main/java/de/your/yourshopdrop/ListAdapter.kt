@@ -19,7 +19,9 @@ class ListAdapter (private val listItemManager: ListItemManager) : RecyclerView.
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        return ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item,parent,false))
+        val holder = ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item,parent,false))
+
+        return holder
     }
 
     override fun getItemCount(): Int {
@@ -43,6 +45,8 @@ class ListAdapter (private val listItemManager: ListItemManager) : RecyclerView.
                 setStrikethrough(itemTitle, isChecked)
             }
         }
+        
+        
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -68,6 +72,11 @@ class ListAdapter (private val listItemManager: ListItemManager) : RecyclerView.
     fun deleteList(){
         listItemManager.deleteAllItems()
         notifyDataSetChanged()
+    }
+
+    fun deleteItem(position: Int){
+        listItemManager.removeItem(position)
+        notifyItemRemoved(position)
     }
 
     private fun setStrikethrough(textView: TextView, isChecked: Boolean) {

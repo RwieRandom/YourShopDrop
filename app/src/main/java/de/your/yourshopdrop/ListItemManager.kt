@@ -21,6 +21,10 @@ class ListItemManager(context: Context, filename: String) {
         saveManager.removeFromList(item)
     }
 
+    fun removeItem(position: Int){
+        removeItem(getItem(position))
+    }
+
     fun deleteAllItems(){
         saveManager.deleteList()
     }
