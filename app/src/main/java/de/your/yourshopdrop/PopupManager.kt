@@ -9,7 +9,7 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 
-
+//TODO: Fenster geht immer wieder zu, soll aber nicht zu gehen wenn man irgendwo anders hinklickt
 class PopupManager(private val context: Activity) {
 
     private val inflater = LayoutInflater.from(context)
@@ -22,7 +22,8 @@ class PopupManager(private val context: Activity) {
 
         val width = LinearLayout.LayoutParams.MATCH_PARENT
         val height = LinearLayout.LayoutParams.WRAP_CONTENT
-        val popupWindow = PopupWindow(popupView, width, height, false)
+        val popupWindow = PopupWindow(popupView, width, height, true)
+
 
 //        if (canDismissOnTouch) {
 //            popupView.setOnTouchListener { _, _ ->
