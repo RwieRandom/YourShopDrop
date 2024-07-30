@@ -1,6 +1,5 @@
 package de.your.yourshopdrop
 
-import SwipeActions
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.RenderEffect
@@ -73,36 +72,37 @@ class ListActivity : AppCompatActivity() {
         val tvListTitle: TextView = findViewById(R.id.tvListTitle)
         tvListTitle.text = loadTitle()
 
-        val callback = SwipeActions(listAdapter)
-        val itemTouchHelper = ItemTouchHelper(callback)
+        val swipeActions = SwipeActions(listAdapter, Screen.START, listAdapter)
+        val itemTouchHelper = ItemTouchHelper(swipeActions)
 
         itemTouchHelper.attachToRecyclerView(rvItemList)
 
-        val swipeActions = SwipeActions(listAdapter)
+        //TODO: Button Click
 
-        rvItemList.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
-            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                if (swipeActions.swipedViewHolder != null) {
-                    val touchedView = rv.findChildViewUnder(e.x, e.y)
-                    if (touchedView == null || touchedView != swipeActions.swipedViewHolder?.itemView) {
-                        // Swipe zurücksetzen
-                        listAdapter.notifyItemChanged(swipeActions.swipedViewHolder!!.adapterPosition)
-                        swipeActions.swipedViewHolder = null
-                        return true
-                    }
-                }
-                return false
-            }
-
-            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {}
-
-            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
-        })
+//        rvItemList.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
+//            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+//                if (swipeActions.swipedViewHolder != null) {
+//                    val touchedView = rv.findChildViewUnder(e.x, e.y)
+//                    if (touchedView == null || touchedView != swipeActions.swipedViewHolder?.itemView) {
+//                        // Swipe zurücksetzen
+//                        listAdapter.notifyItemChanged(swipeActions.swipedViewHolder!!.adapterPosition)
+//                        swipeActions.swipedViewHolder = null
+//                        return true
+//                    }
+//                }
+//                return false
+//            }
+//
+//            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {}
+//
+//            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
+//        })
     }
 
 
     private var currentActivePopup: PopupWindow? = null
 
+    //TODO: ScreenManager
     private fun showScreen(screen: Screen){
 
         val popup: PopupManager.Popup
@@ -130,6 +130,9 @@ class ListActivity : AppCompatActivity() {
                 popup = createPopupNavItems(R.string.lists)
                 selectedItemLists.visibility = View.VISIBLE
                 createPopupLists(popup)
+            } else -> {
+                //TODO: Startscreen zeigen
+                popup = createPopupAddItem()
             }
         }
 
