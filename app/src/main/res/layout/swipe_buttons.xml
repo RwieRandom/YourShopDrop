@@ -9,7 +9,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:id="@+id/btnSwipeRename"
-        android:src="@drawable/edit"
+        android:src="@drawable/ic_edit"
         android:background="@drawable/shape_button_edit"
         app:tint="@color/white" />
 
@@ -17,7 +17,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:id="@+id/btnSwipeDelete"
-        android:src="@drawable/delete"
+        android:src="@drawable/ic_delete"
         android:background="@drawable/shape_button_delete"
         app:tint="@color/white" />
 </LinearLayout>

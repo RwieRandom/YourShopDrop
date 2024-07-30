@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:background="@color/transparent"
         android:contentDescription="TODO"
-        android:src="@drawable/png_open_more"
+        android:src="@drawable/ic_arrow_left"
         app:layout_constraintEnd_toEndOf="parent"
         app:tint="?attr/colorPrimary" />
 
