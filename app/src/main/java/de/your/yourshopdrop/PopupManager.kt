@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.PopupWindow
@@ -24,6 +25,18 @@ class PopupManager(private val context: Activity) {
         val height = LinearLayout.LayoutParams.WRAP_CONTENT
         val popupWindow = PopupWindow(popupView, width, height, true)
 
+        popupWindow.isOutsideTouchable = false
+        popupWindow.isFocusable = true
+
+        popupView.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_OUTSIDE) {
+                // Ignore outside touches
+                true
+            } else {
+                // Let the touch event pass through
+                false
+            }
+        }
 
 //        if (canDismissOnTouch) {
 //            popupView.setOnTouchListener { _, _ ->

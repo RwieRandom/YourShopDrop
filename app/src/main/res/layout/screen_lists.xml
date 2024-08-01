@@ -33,8 +33,20 @@
             android:id="@+id/screenTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/placeholder_header"
+            android:text="@string/lists"
+            android:layout_marginBottom="5dp"
             style="@style/ScreenHeader" />
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/btnAddList"
+            android:background="@color/transparent"
+            android:contentDescription="@string/description_AddItems"
+            android:src="@drawable/ic_add"
+            android:layout_gravity="center"
+            android:layout_marginBottom="5dp"
+            app:tint="?attr/colorPrimary" />
 
         <ScrollView
             android:layout_width="match_parent"

@@ -7,7 +7,6 @@ import android.graphics.Shader
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
-import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -26,7 +25,6 @@ import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.textfield.TextInputLayout
 
 
 class ListActivity : AppCompatActivity() {
@@ -122,14 +120,12 @@ class ListActivity : AppCompatActivity() {
                 popup = createPopupAddItem()
             }
             Screen.SETTINGS -> {
-                popup = createPopupNavItems(R.string.settings)
+                popup = createPopupSettings()
                 selectedItemSettings.visibility = View.VISIBLE
-                createPopupSettings(popup)
             }
             Screen.LISTS -> {
-                popup = createPopupNavItems(R.string.lists)
+                popup = createPopupLists()
                 selectedItemLists.visibility = View.VISIBLE
-                createPopupLists(popup)
             } else -> {
                 //TODO: Startscreen zeigen
                 popup = createPopupAddItem()
@@ -194,11 +190,9 @@ class ListActivity : AppCompatActivity() {
         return popup
     }
 
-    private fun createPopupNavItems(titleID: Int) : PopupManager.Popup{
-        val popup = popupManager.createPopup(R.layout.screen_settings_list, false)
-
-        val title: TextView = popup.popupView.findViewById(R.id.screenTitle)
-        title.text = getString(titleID)
+    //TODO: Funktionalität für Settings + Sprachauswahl
+    private fun createPopupSettings() : PopupManager.Popup {
+        val popup = popupManager.createPopup(R.layout.screen_settings, false)
 
         val btnClose: ImageButton = popup.popupView.findViewById(R.id.btnCloseScreen)
         btnClose.setOnClickListener {
@@ -208,12 +202,21 @@ class ListActivity : AppCompatActivity() {
         return popup
     }
 
-    private fun createPopupSettings(popup:PopupManager.Popup) {
+    //TODO: Funktionalität für Auswahl von Listen
+    private fun createPopupLists() : PopupManager.Popup {
+        val popup = popupManager.createPopup(R.layout.screen_lists, false)
 
-    }
+        val btnClose: ImageButton = popup.popupView.findViewById(R.id.btnCloseScreen)
+        btnClose.setOnClickListener {
+            hideScreen(popup.popupWindow)
+        }
 
-    private fun createPopupLists(popup:PopupManager.Popup) {
+        val btnAddList : ImageButton = popup.popupView.findViewById(R.id.btnAddList)
+        btnAddList.setOnClickListener {
 
+        }
+
+        return popup
     }
 
 

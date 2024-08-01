@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:singleLine="true"
-        android:text="@string/placeholder_listitem"
+        android:text="@string/placeholder_item"
         android:textAlignment="textStart"
         android:layout_marginStart="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
