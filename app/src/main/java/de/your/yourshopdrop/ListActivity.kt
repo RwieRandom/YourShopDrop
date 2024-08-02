@@ -149,30 +149,30 @@ class ListActivity : AppCompatActivity() {
 
         val editText: EditText = popup.popupView.findViewById(R.id.input_new_item)
 
-        val btnConfirm: Button = popup.popupView.findViewById(R.id.btnScreenConfirm)
-        btnConfirm.setOnClickListener {
-            if (editText.text.isNotEmpty()) {
-                listAdapter.add(ListItem(editText.text.toString()))
-                editText.text.clear()
-                hideScreen(popup.popupWindow)
-            } else {
-                hideScreen(popup.popupWindow)
-            }
-        }
+//        val btnConfirm: Button = popup.popupView.findViewById(R.id.btnScreenConfirm)
+//        btnConfirm.setOnClickListener {
+//
+//        }
 
         editText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                btnConfirm.performClick()
+                if (editText.text.isNotEmpty()) {
+                    listAdapter.add(ListItem(editText.text.toString()))
+                    editText.text.clear()
+                    hideScreen(popup.popupWindow)
+                } else {
+                    hideScreen(popup.popupWindow)
+                }
                 true
             } else {
                 false
             }
         }
 
-        val btnCancel: Button = popup.popupView.findViewById(R.id.btnScreenCancel)
-        btnCancel.setOnClickListener {
-            hideScreen(popup.popupWindow)
-        }
+//        val btnCancel: Button = popup.popupView.findViewById(R.id.btnScreenCancel)
+//        btnCancel.setOnClickListener {
+//            hideScreen(popup.popupWindow)
+//        }
 
         val btnClose: ImageButton = popup.popupView.findViewById(R.id.btnCloseScreen)
         btnClose.setOnClickListener {
@@ -182,7 +182,7 @@ class ListActivity : AppCompatActivity() {
         return popup
     }
 
-    //TODO: Funktionalität für Settings + Sprachauswahl
+    //TODO: Funktionalität für Settings z.B Sprachauswahl
     private fun createPopupSettings() : PopupManager.Popup {
         val popup = popupManager.createPopup(R.layout.screen_settings)
 
