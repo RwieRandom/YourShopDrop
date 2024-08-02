@@ -2,9 +2,6 @@ package de.your.yourshopdrop
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.RenderEffect
-import android.graphics.Shader
-import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.view.View
@@ -16,7 +13,6 @@ import android.widget.Button
 import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
@@ -111,9 +107,7 @@ class ListActivity : AppCompatActivity() {
         selectedItemSettings.visibility = View.GONE
         selectedItemLists.visibility = View.GONE
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            blurView(findViewById(R.id.scrollViewListItems))
-        }
+        Tools.blurView(findViewById(R.id.scrollViewListItems))
 
         when(screen){
             Screen.ADD_ITEM -> {
@@ -144,16 +138,14 @@ class ListActivity : AppCompatActivity() {
         selectedItemSettings.visibility = View.GONE
         selectedItemLists.visibility = View.GONE
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            removeBlurView(findViewById(R.id.scrollViewListItems))
-        }
+        Tools.removeBlur(findViewById(R.id.scrollViewListItems))
 
         currentActivePopup = null
     }
 
 
     private fun createPopupAddItem(): PopupManager.Popup {
-        val popup = popupManager.createPopup(R.layout.screen_additem, false)
+        val popup = popupManager.createPopup(R.layout.screen_additem)
 
         val editText: EditText = popup.popupView.findViewById(R.id.input_new_item)
 
@@ -192,7 +184,7 @@ class ListActivity : AppCompatActivity() {
 
     //TODO: Funktionalität für Settings + Sprachauswahl
     private fun createPopupSettings() : PopupManager.Popup {
-        val popup = popupManager.createPopup(R.layout.screen_settings, false)
+        val popup = popupManager.createPopup(R.layout.screen_settings)
 
         val btnClose: ImageButton = popup.popupView.findViewById(R.id.btnCloseScreen)
         btnClose.setOnClickListener {
@@ -204,7 +196,7 @@ class ListActivity : AppCompatActivity() {
 
     //TODO: Funktionalität für Auswahl von Listen
     private fun createPopupLists() : PopupManager.Popup {
-        val popup = popupManager.createPopup(R.layout.screen_lists, false)
+        val popup = popupManager.createPopup(R.layout.screen_lists)
 
         val btnClose: ImageButton = popup.popupView.findViewById(R.id.btnCloseScreen)
         btnClose.setOnClickListener {
@@ -253,20 +245,6 @@ class ListActivity : AppCompatActivity() {
         val inputMethodManager =
             getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
-    }
-
-    @RequiresApi(Build.VERSION_CODES.S)
-    private fun blurView(view: View, radius: Float = 10f) {
-        view.setRenderEffect(
-            RenderEffect.createBlurEffect(
-                radius, radius, Shader.TileMode.CLAMP
-            )
-        )
-    }
-
-    @RequiresApi(Build.VERSION_CODES.S)
-    private fun removeBlurView(view: View) {
-        view.setRenderEffect(null)
     }
 
 }
