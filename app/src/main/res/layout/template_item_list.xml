@@ -1,32 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:paddingStart="8dp"
-    android:paddingEnd="8dp">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
 
     <TextView
         android:id="@+id/tvItemTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
         style="@style/Item"
-        android:ellipsize="end"
-        android:singleLine="true"
-        android:text="@string/placeholder_item"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/cbItemChecked"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@+id/cbItemChecked"
+        android:padding="16dp"
+        android:text="@string/placeholder_item" />
 
     <CheckBox
         android:id="@+id/cbItemChecked"
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:buttonTint="?attr/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:padding="16dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/swipeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone">
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/btnSwipeRename"
+            android:src="@drawable/ic_edit"
+            android:background="@drawable/shape_button_edit"
+            app:tint="@color/white" />
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/btnSwipeDelete"
+            android:src="@drawable/ic_delete"
+            android:background="@drawable/shape_button_delete"
+            app:tint="@color/white" />
+    </LinearLayout>
+</RelativeLayout>

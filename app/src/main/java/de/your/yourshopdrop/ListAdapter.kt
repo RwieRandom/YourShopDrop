@@ -6,21 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class ListAdapter (private val listItemManager: ListItemManager) : RecyclerView.Adapter<ListAdapter.ItemViewHolder>() {
+class ListAdapter(private val listItemManager: ListItemManager) : RecyclerView.Adapter<ListAdapter.ItemViewHolder>() {
+
+    private var swipedPosition = -1
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    fun add(item: ListItem){
+    fun add(item: ListItem) {
         listItemManager.addItem(item)
-        notifyItemInserted(itemCount -1)
+        notifyItemInserted(itemCount - 1)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val holder = ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.template_item_list,parent,false))
-
+        val holder = ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.template_item_list, parent, false))
         return holder
     }
 
@@ -34,19 +37,32 @@ class ListAdapter (private val listItemManager: ListItemManager) : RecyclerView.
         holder.itemView.apply {
             val itemTitle = findViewById<TextView>(R.id.tvItemTitle)
             val checkBox = findViewById<CheckBox>(R.id.cbItemChecked)
+            val swipeLayout = findViewById<LinearLayout>(R.id.swipeLayout)
+            val btnRename = findViewById<ImageButton>(R.id.btnSwipeRename)
+            val btnDelete = findViewById<ImageButton>(R.id.btnSwipeDelete)
 
             itemTitle.text = currentItem.title
             checkBox.isChecked = currentItem.isChecked
             setStrikethrough(itemTitle, currentItem.isChecked)
 
-            checkBox.setOnCheckedChangeListener {_, isChecked ->
-               listItemManager.updateItem(currentItem, isChecked)
-
+            checkBox.setOnCheckedChangeListener { _, isChecked ->
+                listItemManager.updateItem(currentItem, isChecked)
                 setStrikethrough(itemTitle, isChecked)
             }
+
+            swipeLayout.visibility = if (position == swipedPosition) View.VISIBLE else View.GONE
+
+            btnRename.setOnClickListener {
+                // Handle rename logic here
+                notifyItemChanged(swipedPosition)
+                swipedPosition = -1
+            }
+
+            btnDelete.setOnClickListener {
+                deleteItem(position)
+                swipedPosition = -1
+            }
         }
-        
-        
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -69,14 +85,27 @@ class ListAdapter (private val listItemManager: ListItemManager) : RecyclerView.
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun deleteList(){
+    fun deleteList() {
         listItemManager.deleteAllItems()
         notifyDataSetChanged()
     }
 
-    fun deleteItem(position: Int){
+    fun deleteItem(position: Int) {
         listItemManager.removeItem(position)
         notifyItemRemoved(position)
+    }
+
+    fun setSwipedPosition(position: Int) {
+        val previousSwipedPosition = swipedPosition
+        swipedPosition = position
+        notifyItemChanged(previousSwipedPosition)
+        notifyItemChanged(swipedPosition)
+    }
+
+    fun clearSwipedPosition() {
+        val previousSwipedPosition = swipedPosition
+        swipedPosition = -1
+        notifyItemChanged(previousSwipedPosition)
     }
 
     private fun setStrikethrough(textView: TextView, isChecked: Boolean) {
@@ -87,3 +116,4 @@ class ListAdapter (private val listItemManager: ListItemManager) : RecyclerView.
         }
     }
 }
+

@@ -66,31 +66,9 @@ class ListActivity : AppCompatActivity() {
         val tvListTitle: TextView = findViewById(R.id.tvListTitle)
         tvListTitle.text = loadTitle()
 
-        val swipeActions = SwipeActions(listAdapter, Screen.START, listAdapter)
-        val itemTouchHelper = ItemTouchHelper(swipeActions)
-
+        val itemTouchHelper = ItemTouchHelper(SwipeActions(listAdapter))
         itemTouchHelper.attachToRecyclerView(rvItemList)
-
-        //TODO: Button Click
-
-//        rvItemList.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
-//            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-//                if (swipeActions.swipedViewHolder != null) {
-//                    val touchedView = rv.findChildViewUnder(e.x, e.y)
-//                    if (touchedView == null || touchedView != swipeActions.swipedViewHolder?.itemView) {
-//                        // Swipe zurücksetzen
-//                        listAdapter.notifyItemChanged(swipeActions.swipedViewHolder!!.adapterPosition)
-//                        swipeActions.swipedViewHolder = null
-//                        return true
-//                    }
-//                }
-//                return false
-//            }
-//
-//            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {}
-//
-//            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
-//        })
+        rvItemList.addOnItemTouchListener(RecyclerTouchListener(this, rvItemList, listAdapter))
     }
 
 
