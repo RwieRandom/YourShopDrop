@@ -63,6 +63,7 @@ class ListAdapter(private val listItemManager: ListItemManager) : RecyclerView.A
 
             if(renamePosition == position){
                 renameLayout.visibility = View.VISIBLE
+                renameLayout.hint = currentItem.title
                 itemTitle.visibility = View.GONE
                 checkBox.visibility = View.GONE
             } else {
@@ -83,6 +84,7 @@ class ListAdapter(private val listItemManager: ListItemManager) : RecyclerView.A
             renameEditText.setOnEditorActionListener { v, actionId, event ->
                 if (actionId == EditorInfo.IME_ACTION_DONE || (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN)) {
                     val newName = renameEditText.text.toString()
+                    renameEditText.setText("")
                     listItemManager.renameItem(position, newName)
                     renamePosition = -1
                     notifyItemChanged(position)
