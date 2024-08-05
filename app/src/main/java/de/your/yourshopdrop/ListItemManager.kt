@@ -25,6 +25,16 @@ class ListItemManager(context: Context, filename: String) {
         removeItem(getItem(position))
     }
 
+    fun renameItem(position: Int, newName: String){
+        val items = loadItems()
+        items[position].title = newName
+        saveItems(items)
+    }
+
+    fun renameItem(item: ListItem, newName: String) {
+        renameItem(loadItems().indexOf(item), newName)
+    }
+
     fun deleteAllItems(){
         saveManager.deleteList()
     }

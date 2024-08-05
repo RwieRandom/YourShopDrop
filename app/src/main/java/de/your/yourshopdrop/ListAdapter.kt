@@ -1,19 +1,26 @@
 package de.your.yourshopdrop
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 
 class ListAdapter(private val listItemManager: ListItemManager) : RecyclerView.Adapter<ListAdapter.ItemViewHolder>() {
 
     private var swipedPosition = -1
+    private var renamePosition = -1
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -38,6 +45,8 @@ class ListAdapter(private val listItemManager: ListItemManager) : RecyclerView.A
             val itemTitle = findViewById<TextView>(R.id.tvItemTitle)
             val checkBox = findViewById<CheckBox>(R.id.cbItemChecked)
             val swipeLayout = findViewById<LinearLayout>(R.id.swipeLayout)
+            val renameLayout = findViewById<TextInputLayout>(R.id.container_renameItem)
+            val renameEditText = findViewById<TextInputEditText>(R.id.input_rename_item)
             val btnRename = findViewById<ImageButton>(R.id.btnSwipeRename)
             val btnDelete = findViewById<ImageButton>(R.id.btnSwipeDelete)
 
@@ -52,15 +61,37 @@ class ListAdapter(private val listItemManager: ListItemManager) : RecyclerView.A
 
             swipeLayout.visibility = if (position == swipedPosition) View.VISIBLE else View.GONE
 
+            if(renamePosition == position){
+                renameLayout.visibility = View.VISIBLE
+                itemTitle.visibility = View.GONE
+                checkBox.visibility = View.GONE
+            } else {
+                renameLayout.visibility = View.GONE
+                itemTitle.visibility = View.VISIBLE
+                checkBox.visibility = View.VISIBLE
+            }
+
             btnRename.setOnClickListener {
-                // Handle rename logic here
-                notifyItemChanged(swipedPosition)
-                swipedPosition = -1
+                showRenameLayout(position)
             }
 
             btnDelete.setOnClickListener {
                 deleteItem(position)
                 swipedPosition = -1
+            }
+
+            renameEditText.setOnEditorActionListener { v, actionId, event ->
+                if (actionId == EditorInfo.IME_ACTION_DONE || (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN)) {
+                    val newName = renameEditText.text.toString()
+                    listItemManager.renameItem(position, newName)
+                    renamePosition = -1
+                    notifyItemChanged(position)
+
+                    Tools.hideKeyboard(v)
+                    true
+                } else {
+                    false
+                }
             }
         }
     }
@@ -69,14 +100,12 @@ class ListAdapter(private val listItemManager: ListItemManager) : RecyclerView.A
     fun deleteCheckedItems() {
         val itemsToDelete = mutableListOf<ListItem>()
 
-        // Find checked items
         for (item in listItemManager.loadItems()) {
             if (item.isChecked) {
                 itemsToDelete.add(item)
             }
         }
 
-        // Remove checked items
         for (item in itemsToDelete) {
             listItemManager.removeItem(item)
         }
@@ -90,7 +119,7 @@ class ListAdapter(private val listItemManager: ListItemManager) : RecyclerView.A
         notifyDataSetChanged()
     }
 
-    fun deleteItem(position: Int) {
+    private fun deleteItem(position: Int) {
         listItemManager.removeItem(position)
         notifyItemRemoved(position)
     }
@@ -108,6 +137,12 @@ class ListAdapter(private val listItemManager: ListItemManager) : RecyclerView.A
         notifyItemChanged(previousSwipedPosition)
     }
 
+    fun clearRenamePosition() {
+        val previousRenamePosition = renamePosition
+        renamePosition = -1
+        notifyItemChanged(previousRenamePosition)
+    }
+
     private fun setStrikethrough(textView: TextView, isChecked: Boolean) {
         if (isChecked) {
             textView.paintFlags = textView.paintFlags or STRIKE_THRU_TEXT_FLAG
@@ -115,5 +150,15 @@ class ListAdapter(private val listItemManager: ListItemManager) : RecyclerView.A
             textView.paintFlags = textView.paintFlags and STRIKE_THRU_TEXT_FLAG.inv()
         }
     }
+
+    fun getRenamePosition(): Int {
+        return renamePosition
+    }
+
+    private fun showRenameLayout(position: Int) {
+        renamePosition = position
+        notifyItemChanged(position)
+    }
 }
+
 

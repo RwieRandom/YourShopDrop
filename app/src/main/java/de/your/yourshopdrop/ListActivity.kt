@@ -132,12 +132,13 @@ class ListActivity : AppCompatActivity() {
 //
 //        }
 
-        editText.setOnEditorActionListener { _, actionId, _ ->
+        editText.setOnEditorActionListener { v, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 if (editText.text.isNotEmpty()) {
                     listAdapter.add(ListItem(editText.text.toString()))
                     editText.text.clear()
                     hideScreen(popup.popupWindow)
+                    Tools.hideKeyboard(v)
                 } else {
                     hideScreen(popup.popupWindow)
                 }
@@ -218,11 +219,4 @@ class ListActivity : AppCompatActivity() {
             windowInsets
         }
     }
-
-    private fun hideKeyboard(windowToken: IBinder) {
-        val inputMethodManager =
-            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
-    }
-
 }
