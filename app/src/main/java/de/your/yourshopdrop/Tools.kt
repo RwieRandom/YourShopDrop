@@ -8,6 +8,10 @@ import android.os.Build
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 
 class Tools {
      companion object{
@@ -37,6 +41,20 @@ class Tools {
          fun hideKeyboard(textView: TextView){
              val imm = textView.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
              imm.hideSoftInputFromWindow(textView.windowToken, 0)
+         }
+
+         fun defineSafeWindow(context: Activity) {
+             val contentLayout = context.findViewById<ConstraintLayout>(R.id.main)
+             ViewCompat.setOnApplyWindowInsetsListener(contentLayout) { view, windowInsets ->
+                 val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+                 view.updatePadding(
+                     left = insets.left,
+                     top = insets.top,
+                     right = insets.right,
+                     bottom = insets.bottom
+                 )
+                 windowInsets
+             }
          }
 
      }

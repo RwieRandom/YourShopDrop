@@ -13,6 +13,8 @@ import android.widget.LinearLayout
 import android.widget.PopupWindow
 import androidx.constraintlayout.widget.ConstraintLayout
 
+
+//TODO: PopupManager wird zu ScreenInflator umbenannt, Dazu gibt es einen ScreenManager um alles zu regeln
 class PopupManager(private val context: Activity) {
 
     private val inflater = LayoutInflater.from(context)

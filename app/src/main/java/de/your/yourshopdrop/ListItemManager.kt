@@ -2,6 +2,8 @@ package de.your.yourshopdrop
 
 import android.content.Context
 
+//TODO: erbt vom SaveManager
+//TODO: mehrere Shoplisten mit items
 class ListItemManager(context: Context, filename: String) {
     private var saveManager:SaveManager = SaveManager(context, filename)
 

@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class ListActivity : AppCompatActivity() {
     private lateinit var listAdapter: ListAdapter
+    private lateinit var listItemManager: ListItemManager
     private lateinit var popupManager: PopupManager
 
     @SuppressLint("ClickableViewAccessibility", "InflateParams")
@@ -32,13 +33,13 @@ class ListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         popupManager = PopupManager(this)
-        val listItemManager = ListItemManager(this, "items.json")
+        listItemManager = ListItemManager(this, "items.json")
         listAdapter = ListAdapter(listItemManager)
 
 
         enableEdgeToEdge()
         setContentView(R.layout.screen_main)
-        defineSafeWindow()
+        Tools.defineSafeWindow(this)
 
         setupList()
 
@@ -64,7 +65,7 @@ class ListActivity : AppCompatActivity() {
         rvItemList.adapter = listAdapter
         rvItemList.layoutManager = LinearLayoutManager(this)
         val tvListTitle: TextView = findViewById(R.id.tvListTitle)
-        tvListTitle.text = loadTitle()
+
 
         val itemTouchHelper = ItemTouchHelper(SwipeActions(listAdapter))
         itemTouchHelper.attachToRecyclerView(rvItemList)
@@ -188,35 +189,5 @@ class ListActivity : AppCompatActivity() {
         }
 
         return popup
-    }
-
-
-
-    private fun saveTitle(title: String) {
-        val sharedPref = getSharedPreferences("listPrefs", Context.MODE_PRIVATE)
-        with(sharedPref.edit()) {
-            putString("listTitle", title)
-            apply()
-        }
-    }
-
-    private fun loadTitle(): String {
-        val title: String = getString(R.string.placeholder_title)
-        val sharedPref = getSharedPreferences("listPrefs", Context.MODE_PRIVATE)
-        return sharedPref.getString("listTitle", title) ?: title
-    }
-
-    private fun defineSafeWindow() {
-        val contentLayout = findViewById<ConstraintLayout>(R.id.main)
-        ViewCompat.setOnApplyWindowInsetsListener(contentLayout) { view, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.updatePadding(
-                left = insets.left,
-                top = insets.top,
-                right = insets.right,
-                bottom = insets.bottom
-            )
-            windowInsets
-        }
     }
 }
