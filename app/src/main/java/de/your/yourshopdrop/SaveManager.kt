@@ -24,7 +24,7 @@ open class SaveManager(val context: Context) {
      * @param listName Der Name der neuen Liste.
      * @return true, wenn die Liste erfolgreich erstellt wurde, false, wenn die Liste bereits existiert.
      */
-    fun createNewList(listName: String): Boolean {
+    open fun createNewList(listName: String): Boolean {
         val filename = getFilename(listName)
         val file = File(context.filesDir, filename)
         return if (file.exists()) {

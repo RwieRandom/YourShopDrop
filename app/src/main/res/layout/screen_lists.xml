@@ -63,7 +63,7 @@
         android:layout_marginBottom="20dp">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/screenList"
+            android:id="@+id/rvScreenList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

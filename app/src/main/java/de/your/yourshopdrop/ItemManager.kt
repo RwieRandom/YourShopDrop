@@ -6,7 +6,7 @@ import android.content.SharedPreferences
 class ItemManager(context: Context) : SaveManager(context) {
 
     private var currentListName: String? = null
-    private val defaultListName = "defaultList"
+    private val defaultListName = context.getString(R.string.placeholder_title)
     private val preferences: SharedPreferences = context.getSharedPreferences("ItemManagerPrefs", Context.MODE_PRIVATE)
     private val lastUsedListKey = "lastUsedList"
 
@@ -36,6 +36,14 @@ class ItemManager(context: Context) : SaveManager(context) {
         if (!listAllLists().contains(listName)) {
             createNewList(listName)
         }
+    }
+
+    override fun createNewList(listName: String): Boolean {
+        val result = super.createNewList(listName)
+        if (result) {
+            setCurrentList(listName)
+        }
+        return result
     }
 
     fun getCurrentListName(): String? {
@@ -106,5 +114,10 @@ class ItemManager(context: Context) : SaveManager(context) {
     fun getItem(position: Int): ListItem {
         val items: MutableList<ListItem> = loadItems()
         return items[position]
+    }
+
+    fun getList(position: Int): String {
+        val lists = listAllLists()
+        return lists[position]
     }
 }

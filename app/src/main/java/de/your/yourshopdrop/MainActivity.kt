@@ -11,10 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 
-class ListActivity : AppCompatActivity() {
-    private lateinit var listAdapter: ListAdapter
+class MainActivity : AppCompatActivity() {
+    private lateinit var itemAdapter: ItemAdapter
     private lateinit var itemManager: ItemManager
-    private lateinit var screenInflater: ScreenInflater
     private lateinit var screenManager: ScreenManager
 
     @SuppressLint("ClickableViewAccessibility", "InflateParams")
@@ -22,15 +21,15 @@ class ListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         itemManager = ItemManager(this)
-        listAdapter = ListAdapter(itemManager)
-        screenManager = ScreenManager(this, listAdapter)
+        itemAdapter = ItemAdapter(itemManager)
+        screenManager = ScreenManager(this, itemAdapter, itemManager)
 
 
         enableEdgeToEdge()
         setContentView(R.layout.screen_main)
         Tools.defineSafeWindow(this)
 
-        setupList()
+        setupItems()
 
         val btnAddItem : ImageButton = findViewById(R.id.btnAddItem)
         btnAddItem.setOnClickListener{
@@ -49,16 +48,16 @@ class ListActivity : AppCompatActivity() {
 
     }
 
-    private fun setupList(){
+    private fun setupItems(){
         val rvItemList : RecyclerView = findViewById(R.id.rvItemList)
-        rvItemList.adapter = listAdapter
+        rvItemList.adapter = itemAdapter
         rvItemList.layoutManager = LinearLayoutManager(this)
         val tvListTitle: TextView = findViewById(R.id.tvListTitle)
         tvListTitle.text = itemManager.getCurrentListName()
 
 
-        val itemTouchHelper = ItemTouchHelper(SwipeActions(listAdapter))
+        val itemTouchHelper = ItemTouchHelper(SwipeActions(itemAdapter))
         itemTouchHelper.attachToRecyclerView(rvItemList)
-        rvItemList.addOnItemTouchListener(RecyclerTouchListener(this, rvItemList, listAdapter))
+        rvItemList.addOnItemTouchListener(RecyclerTouchListener(this, rvItemList, itemAdapter))
     }
 }

@@ -7,11 +7,14 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.PopupWindow
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 
-class ScreenManager (private val context: Activity, private val listAdapter: ListAdapter? = null){
+class ScreenManager (private val context: Activity, private val itemAdapter: ItemAdapter, private val itemManager: ItemManager){
 
     private val screenInflater = ScreenInflater(context)
+    private val listAdapter = ListAdapter(context, itemManager, itemAdapter, this)
 
     private var currentActivePopup: PopupWindow? = null
 
@@ -52,6 +55,10 @@ class ScreenManager (private val context: Activity, private val listAdapter: Lis
         currentActivePopup = inflatedScreen.popupWindow
     }
 
+    fun hideScreen(){
+        hideScreen(currentActivePopup)
+    }
+
     private fun hideScreen(screen: PopupWindow?){
         screen?.dismiss()
         onScreenClose()
@@ -59,7 +66,7 @@ class ScreenManager (private val context: Activity, private val listAdapter: Lis
     }
 
     private fun screenAddItem(): ScreenInflater.Screen {
-        requireNotNull(listAdapter) { "ListAdapter darf nicht null sein" }
+        requireNotNull(itemAdapter) { "ListAdapter darf nicht null sein" }
 
         val inflatedScreen = screenInflater.createScreen(R.layout.screen_additem)
 
@@ -68,7 +75,7 @@ class ScreenManager (private val context: Activity, private val listAdapter: Lis
         editText.setOnEditorActionListener { v, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 if (editText.text.isNotEmpty()) {
-                    listAdapter.add(ListItem(editText.text.toString()))
+                    itemAdapter.add(ListItem(editText.text.toString()))
                     editText.text.clear()
                     hideScreen(inflatedScreen.popupWindow)
                     Tools.hideKeyboard(v)
@@ -104,6 +111,10 @@ class ScreenManager (private val context: Activity, private val listAdapter: Lis
     //TODO: Funktionalität für Auswahl von Listen
     private fun screenLists() : ScreenInflater.Screen {
         val inflatedScreen = screenInflater.createScreen(R.layout.screen_lists)
+
+        val screenList : RecyclerView = inflatedScreen.screenView.findViewById(R.id.rvScreenList)
+        screenList.adapter = listAdapter
+        screenList.layoutManager = LinearLayoutManager(context)
 
         val btnClose: ImageButton = inflatedScreen.screenView.findViewById(R.id.btnCloseScreen)
         btnClose.setOnClickListener {
