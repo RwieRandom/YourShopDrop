@@ -2,15 +2,10 @@ package de.your.yourshopdrop
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class ListActivity : AppCompatActivity() {
     private lateinit var listAdapter: ListAdapter
-    private lateinit var listItemManager: ListItemManager
+    private lateinit var itemManager: ItemManager
     private lateinit var screenInflater: ScreenInflater
     private lateinit var screenManager: ScreenManager
 
@@ -26,8 +21,8 @@ class ListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        listItemManager = ListItemManager(this, "items.json")
-        listAdapter = ListAdapter(listItemManager)
+        itemManager = ItemManager(this)
+        listAdapter = ListAdapter(itemManager)
         screenManager = ScreenManager(this, listAdapter)
 
 
@@ -59,6 +54,7 @@ class ListActivity : AppCompatActivity() {
         rvItemList.adapter = listAdapter
         rvItemList.layoutManager = LinearLayoutManager(this)
         val tvListTitle: TextView = findViewById(R.id.tvListTitle)
+        tvListTitle.text = itemManager.getCurrentListName()
 
 
         val itemTouchHelper = ItemTouchHelper(SwipeActions(listAdapter))

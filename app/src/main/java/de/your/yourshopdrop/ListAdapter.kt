@@ -1,14 +1,12 @@
 package de.your.yourshopdrop
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.LinearLayout
@@ -17,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
-class ListAdapter(private val listItemManager: ListItemManager) : RecyclerView.Adapter<ListAdapter.ItemViewHolder>() {
+class ListAdapter(private val itemManager: ItemManager) : RecyclerView.Adapter<ListAdapter.ItemViewHolder>() {
 
     private var swipedPosition = -1
     private var renamePosition = -1
@@ -25,7 +23,7 @@ class ListAdapter(private val listItemManager: ListItemManager) : RecyclerView.A
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     fun add(item: ListItem) {
-        listItemManager.addItem(item)
+        itemManager.addItem(item)
         notifyItemInserted(itemCount - 1)
     }
 
@@ -35,11 +33,11 @@ class ListAdapter(private val listItemManager: ListItemManager) : RecyclerView.A
     }
 
     override fun getItemCount(): Int {
-        return listItemManager.getItemCount()
+        return itemManager.getItemCount()
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val currentItem = listItemManager.getItem(position)
+        val currentItem = itemManager.getItem(position)
 
         holder.itemView.apply {
             val itemTitle = findViewById<TextView>(R.id.tvItemTitle)
@@ -55,7 +53,7 @@ class ListAdapter(private val listItemManager: ListItemManager) : RecyclerView.A
             setStrikethrough(itemTitle, currentItem.isChecked)
 
             checkBox.setOnCheckedChangeListener { _, isChecked ->
-                listItemManager.updateItem(currentItem, isChecked)
+                itemManager.updateItem(currentItem, isChecked)
                 setStrikethrough(itemTitle, isChecked)
             }
 
@@ -85,7 +83,7 @@ class ListAdapter(private val listItemManager: ListItemManager) : RecyclerView.A
                 if (actionId == EditorInfo.IME_ACTION_DONE || (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN)) {
                     val newName = renameEditText.text.toString()
                     renameEditText.setText("")
-                    listItemManager.renameItem(position, newName)
+                    itemManager.renameItem(position, newName)
                     renamePosition = -1
                     notifyItemChanged(position)
 
@@ -102,14 +100,14 @@ class ListAdapter(private val listItemManager: ListItemManager) : RecyclerView.A
     fun deleteCheckedItems() {
         val itemsToDelete = mutableListOf<ListItem>()
 
-        for (item in listItemManager.loadItems()) {
+        for (item in itemManager.loadItems()) {
             if (item.isChecked) {
                 itemsToDelete.add(item)
             }
         }
 
         for (item in itemsToDelete) {
-            listItemManager.removeItem(item)
+            itemManager.removeItem(item)
         }
 
         notifyDataSetChanged()
@@ -117,12 +115,12 @@ class ListAdapter(private val listItemManager: ListItemManager) : RecyclerView.A
 
     @SuppressLint("NotifyDataSetChanged")
     fun deleteList() {
-        listItemManager.deleteAllItems()
+        itemManager.deleteAllItems()
         notifyDataSetChanged()
     }
 
     private fun deleteItem(position: Int) {
-        listItemManager.removeItem(position)
+        itemManager.removeItem(position)
         notifyItemRemoved(position)
     }
 
