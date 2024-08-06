@@ -8,7 +8,8 @@
     <string name="item_add">Add Item</string>
     <string name="item_name">Itemname</string>
     <string name="item_rename">Rename Item</string>
-    <string name="list_add">Add List</string>"
+    <string name="list_add">Add List</string>
+    <string name="item_quantity">Quantity</string>
 
 
     <string name="description_AddItems">Adds items to the list</string>
@@ -18,4 +19,5 @@
 
     <string name="placeholder_title">Shoppinglist</string>
     <string name="placeholder_item" translatable="false">Item</string>
+    <string name="placeholder_quantity" translatable="false">Quantity</string>
 </resources>

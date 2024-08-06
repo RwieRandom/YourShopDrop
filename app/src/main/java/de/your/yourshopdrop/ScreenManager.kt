@@ -10,6 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputEditText
 
 
 class ScreenManager (private val context: Activity, private val itemAdapter: ItemAdapter, private val itemManager: ItemManager){
@@ -69,18 +70,21 @@ class ScreenManager (private val context: Activity, private val itemAdapter: Ite
 
         val inflatedScreen = screenInflater.createScreen(R.layout.screen_additem)
 
-        val editText: EditText = inflatedScreen.screenView.findViewById(R.id.input_new_item)
+        val title= inflatedScreen.screenView.findViewById<EditText>(R.id.input_new_item)
+        val quantity = inflatedScreen.screenView.findViewById<TextInputEditText>(R.id.input_quantity)
 
-        editText.setOnEditorActionListener { v, actionId, _ ->
+        title.setOnEditorActionListener { v, actionId, _ ->
             if (Tools.getKeyboardEnter(actionId)) {
-                if (editText.text.isNotEmpty()) {
-                    itemAdapter.add(ListItem(editText.text.toString()))
-                    editText.text.clear()
-                    hideScreen(inflatedScreen.popupWindow)
-                    Tools.hideKeyboard(v)
-                } else {
-                    hideScreen(inflatedScreen.popupWindow)
-                }
+                addListItem(inflatedScreen, v, title, quantity)
+                true
+            } else {
+                false
+            }
+        }
+
+        quantity.setOnEditorActionListener { v, actionId, _ ->
+            if (Tools.getKeyboardEnter(actionId)) {
+                addListItem(inflatedScreen, v, title, quantity)
                 true
             } else {
                 false
@@ -163,5 +167,18 @@ class ScreenManager (private val context: Activity, private val itemAdapter: Ite
 
         context.findViewById<TextView>(R.id.tvListTitle).text = itemManager.getCurrentListName()
         Tools.removeBlur(context.findViewById(R.id.scrollViewListItems))
+    }
+
+    private fun addListItem(inflatedScreen: ScreenInflater.Screen, v: TextView,title: EditText, quantity: EditText){
+        if (title.text.isEmpty()) { return }
+
+        val quantityText = quantity.text.toString()
+        val finalQuantityText = quantityText.ifEmpty { "1" }
+
+        itemAdapter.add(ListItem(title.text.toString(), finalQuantityText))
+        title.text.clear()
+        quantity.text.clear()
+        hideScreen(inflatedScreen.popupWindow)
+        Tools.hideKeyboard(v)
     }
 }

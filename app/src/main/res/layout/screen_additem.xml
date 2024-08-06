@@ -32,62 +32,42 @@
         android:orientation="horizontal"
         android:layout_marginBottom="30dp"
         android:paddingHorizontal="8dp"
-        android:weightSum="7">
+        android:weightSum="3">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_weight="2"
-            android:layout_marginEnd="8dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/input_add_item_amount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autofillHints="no"
-                android:ellipsize="end"
-                android:inputType="text"
-                android:textAlignment="center"
-                android:singleLine="true"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_weight="1"
-            android:layout_marginEnd="8dp">
-
-            <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                android:id="@+id/input_add_item_"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:autofillHints="no"
-                android:ellipsize="end"
-                android:inputType="text"
-                android:textAlignment="center"
-                android:singleLine="true"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/AddItemInputLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_weight="4">
+            android:layout_weight="2">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_new_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:autofillHints="no"
+                android:ellipsize="end"
+                android:inputType="text"
+                android:singleLine="true"
+                android:hint="@string/item_name" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_weight="1">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_quantity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints="no"
                 android:ellipsize="end"
                 android:inputType="text"
                 android:singleLine="true"
-                android:hint="@string/item_name" />
+                android:hint="@string/item_quantity" />
 
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>

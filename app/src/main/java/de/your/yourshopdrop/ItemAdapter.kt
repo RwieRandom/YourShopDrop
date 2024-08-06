@@ -47,6 +47,7 @@ class ItemAdapter(private val itemManager: ItemManager) : RecyclerView.Adapter<I
 
         holder.itemView.apply {
             val itemTitle = findViewById<TextView>(R.id.tvItemTitle)
+            val itemQuantity = findViewById<TextView>(R.id.tvItemQuantity)
             val checkBox = findViewById<CheckBox>(R.id.cbItemChecked)
             val swipeLayout = findViewById<LinearLayout>(R.id.swipeLayout)
             val renameLayout = findViewById<TextInputLayout>(R.id.container_renameItem)
@@ -55,6 +56,7 @@ class ItemAdapter(private val itemManager: ItemManager) : RecyclerView.Adapter<I
             val btnDelete = findViewById<ImageButton>(R.id.btnSwipeDelete)
 
             itemTitle.text = currentItem.title
+            itemQuantity.text = currentItem.quantity
             checkBox.isChecked = currentItem.isChecked
             setStrikethrough(itemTitle, currentItem.isChecked)
 
