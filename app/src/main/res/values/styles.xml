@@ -24,5 +24,7 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="Item.Settings" parent="Item.Quantity"/>
+
 
 </resources>

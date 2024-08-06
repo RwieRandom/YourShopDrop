@@ -2,9 +2,11 @@ package de.your.yourshopdrop
 
 import android.app.Activity
 import android.view.View
+import android.widget.AdapterView
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.PopupWindow
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -13,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
 
 
-class ScreenManager (private val context: Activity, private val itemAdapter: ItemAdapter, private val itemManager: ItemManager){
+class ScreenManager (private val context: Activity, private val itemAdapter: ItemAdapter, private val itemManager: ItemManager, private val activity: MainActivity){
 
     private val screenInflater = ScreenInflater(context)
 
@@ -99,7 +101,6 @@ class ScreenManager (private val context: Activity, private val itemAdapter: Ite
         return inflatedScreen
     }
 
-    //TODO: Funktionalität für Settings z.B Sprachauswahl
     private fun screenSettings() : ScreenInflater.Screen {
         val inflatedScreen = screenInflater.createScreen(R.layout.screen_settings)
 
@@ -107,6 +108,10 @@ class ScreenManager (private val context: Activity, private val itemAdapter: Ite
         btnClose.setOnClickListener {
             hideScreen(inflatedScreen.popupWindow)
         }
+
+        val languageSpinner: Spinner = inflatedScreen.screenView.findViewById(R.id.languageSpinner)
+
+        LanguageManager(activity).setupSpinnerListener(languageSpinner, this)
 
         return inflatedScreen
     }

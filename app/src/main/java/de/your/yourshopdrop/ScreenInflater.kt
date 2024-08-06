@@ -46,7 +46,7 @@ class ScreenInflater(private val context: Activity) {
         // Entferne die Hintergrund-View wenn das Popup geschlossen wird
         popupWindow.setOnDismissListener {
             parentView.removeView(backgroundView)
-            ScreenManager(context, ItemAdapter(ItemManager(context)), ItemManager(context)).onScreenClose()
+            ScreenManager(context, ItemAdapter(ItemManager(context)), ItemManager(context), context as MainActivity).onScreenClose()
         }
 
         popupWindow.showAtLocation(context.window.decorView, Gravity.TOP, 0, 0)
