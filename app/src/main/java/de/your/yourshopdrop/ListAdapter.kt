@@ -1,15 +1,9 @@
 package de.your.yourshopdrop
 
-import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
-import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
-import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -17,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
-class ListAdapter(private val activity: Activity, private val itemManager: ItemManager, private val itemAdapter: ItemAdapter, private val screenManager: ScreenManager) : RecyclerView.Adapter<ListAdapter.ItemViewHolder>() {
+class ListAdapter(private val view: View, private val itemManager: ItemManager, private val itemAdapter: ItemAdapter, private val screenManager: ScreenManager, private val activity: Activity) : RecyclerView.Adapter<ListAdapter.ItemViewHolder>() {
 
     private var swipedPosition = -1
     private var renamePosition = -1
@@ -44,66 +38,59 @@ class ListAdapter(private val activity: Activity, private val itemManager: ItemM
         holder.itemView.apply {
             val listTitle = findViewById<TextView>(R.id.template_item_title_more)
             val btnShowList = findViewById<ImageButton>(R.id.btnOpenMore)
-//            val swipeLayout = findViewById<LinearLayout>(R.id.swipeLayout)
-//            val renameLayout = findViewById<TextInputLayout>(R.id.container_renameItem)
-//            val renameEditText = findViewById<TextInputEditText>(R.id.input_rename_item)
-//            val btnRename = findViewById<ImageButton>(R.id.btnSwipeRename)
-//            val btnDelete = findViewById<ImageButton>(R.id.btnSwipeDelete)
+            val swipeLayout = findViewById<LinearLayout>(R.id.swipeLayout)
+            val renameLayout = findViewById<TextInputLayout>(R.id.container_renameItem)
+            val renameEditText = findViewById<TextInputEditText>(R.id.input_rename_item)
+            val btnRename = findViewById<ImageButton>(R.id.btnSwipeRename)
+            val btnDelete = findViewById<ImageButton>(R.id.btnSwipeDelete)
 
             listTitle.text = currentList
 
-            //swipeLayout.visibility = if (position == swipedPosition) View.VISIBLE else View.GONE
+            swipeLayout.visibility = if (position == swipedPosition) View.VISIBLE else View.GONE
 
-//            if(renamePosition == position){
-//                renameLayout.visibility = View.VISIBLE
-//                renameLayout.hint = currentList
-//            } else {
-//                renameLayout.visibility = View.GONE
-//            }
+            if(renamePosition == position){
+                renameLayout.visibility = View.VISIBLE
+                renameLayout.hint = currentList
+            } else {
+                renameLayout.visibility = View.GONE
+            }
 
             btnShowList.setOnClickListener {
                 itemManager.setCurrentList(currentList)
                 itemAdapter.refreshList()
-                //TODO: Den Title der liste richtig anzeigen
-//                activity.findViewById<TextView>(R.id.tvItemTitle).text = currentList
+
                 screenManager.hideScreen()
             }
 
-            //TODO: auf ListAdapter umschreiben
-//            btnRename.setOnClickListener {
-//                showRenameLayout(position)
-//            }
-//
-//            btnDelete.setOnClickListener {
-//                deleteItem(position)
-//                swipedPosition = -1
-//            }
-//
-//            renameEditText.setOnEditorActionListener { v, actionId, event ->
-//                if (actionId == EditorInfo.IME_ACTION_DONE || (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN)) {
-//                    val newName = renameEditText.text.toString()
-//                    renameEditText.setText("")
-//                    itemManager.renameItem(position, newName)
-//                    renamePosition = -1
-//                    notifyItemChanged(position)
-//
-//                    Tools.hideKeyboard(v)
-//                    true
-//                } else {
-//                    false
-//                }
-//            }
+            btnRename.setOnClickListener {
+                showRenameLayout(position)
+            }
+
+            btnDelete.setOnClickListener {
+                deleteList(position)
+                swipedPosition = -1
+            }
+
+            renameEditText.setOnEditorActionListener { v, actionId, _ ->
+                if (Tools.getKeyboardEnter(actionId)) {
+                    val newName = renameEditText.text.toString()
+                    renameEditText.setText("")
+                    itemManager.renameList(listTitle.text.toString(), newName)
+                    renamePosition = -1
+                    notifyItemChanged(position)
+                    Tools.hideKeyboard(v)
+                    true
+                } else {
+                    false
+                }
+            }
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun deleteList() {
-        itemManager.deleteAllItems()
-        notifyDataSetChanged()
-    }
-
-    private fun deleteItem(position: Int) {
-        itemManager.removeItem(position)
+    private fun deleteList(position: Int) {
+        itemManager.deleteList(position)
+        activity.findViewById<TextView>(R.id.tvListTitle).text = itemManager.getCurrentListName()
+        itemAdapter.refreshList()
         notifyItemRemoved(position)
     }
 
@@ -124,14 +111,6 @@ class ListAdapter(private val activity: Activity, private val itemManager: ItemM
         val previousRenamePosition = renamePosition
         renamePosition = -1
         notifyItemChanged(previousRenamePosition)
-    }
-
-    private fun setStrikethrough(textView: TextView, isChecked: Boolean) {
-        if (isChecked) {
-            textView.paintFlags = textView.paintFlags or STRIKE_THRU_TEXT_FLAG
-        } else {
-            textView.paintFlags = textView.paintFlags and STRIKE_THRU_TEXT_FLAG.inv()
-        }
     }
 
     fun getRenamePosition(): Int {

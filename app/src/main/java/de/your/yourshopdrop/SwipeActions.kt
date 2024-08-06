@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
 class SwipeActions(
-    private val adapter: ItemAdapter
+    private val adapter: RecyclerView.Adapter<*>
 ) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
     override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
@@ -13,7 +13,11 @@ class SwipeActions(
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        adapter.setSwipedPosition(viewHolder.adapterPosition)
+        if (adapter is ItemAdapter) {
+            adapter.setSwipedPosition(viewHolder.adapterPosition)
+        } else if (adapter is ListAdapter) {
+            adapter.setSwipedPosition(viewHolder.adapterPosition)
+        }
     }
 
     override fun getSwipeThreshold(viewHolder: RecyclerView.ViewHolder): Float {

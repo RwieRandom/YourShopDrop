@@ -88,7 +88,7 @@ open class SaveManager(val context: Context) {
      * Löscht eine gespeicherte Liste.
      * @param listName Der Name der zu löschenden Liste.
      */
-    fun deleteList(listName: String) {
+    open fun deleteList(listName: String) {
         context.deleteFile(getFilename(listName))
     }
 
@@ -124,14 +124,12 @@ open class SaveManager(val context: Context) {
      * @param newListName Der neue Name der Liste.
      * @return true, wenn die Liste erfolgreich umbenannt wurde, false, wenn die Liste mit dem neuen Namen bereits existiert.
      */
-    fun renameList(oldListName: String, newListName: String): Boolean {
+    open fun renameList(oldListName: String, newListName: String) {
         val oldFilename = getFilename(oldListName)
         val newFilename = getFilename(newListName)
         val oldFile = File(context.filesDir, oldFilename)
         val newFile = File(context.filesDir, newFilename)
-        return if (newFile.exists()) {
-            false
-        } else {
+        if (!newFile.exists()) {
             oldFile.renameTo(newFile)
         }
     }

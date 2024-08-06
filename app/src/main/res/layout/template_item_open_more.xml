@@ -2,13 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
-    android:background="@drawable/shape_button_border"
-    >
+    android:layout_height="60dp"
+    android:layout_marginBottom="5dp">
+    <!-- android:background="@drawable/shape_button_border" -->
+
 
     <ImageButton
         android:id="@+id/btnOpenMore"
-        android:layout_width="48dp"
+        android:layout_width="50dp"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
         android:background="@color/transparent"
@@ -35,5 +36,54 @@
         app:layout_constraintEnd_toStartOf="@+id/btnOpenMore"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/swipeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone">
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/btnSwipeRename"
+            android:src="@drawable/ic_edit"
+            android:background="@drawable/shape_button_edit"
+            app:tint="@color/white" />
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/btnSwipeDelete"
+            android:src="@drawable/ic_delete"
+            android:background="@drawable/shape_button_delete"
+            app:tint="@color/white" />
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/container_renameItem"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:background="?android:attr/colorBackground"
+        android:visibility="gone">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_rename_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="no"
+            android:ellipsize="end"
+            android:hint="@string/item_rename"
+            android:inputType="text"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 </RelativeLayout>

@@ -52,12 +52,12 @@ class MainActivity : AppCompatActivity() {
         val rvItemList : RecyclerView = findViewById(R.id.rvItemList)
         rvItemList.adapter = itemAdapter
         rvItemList.layoutManager = LinearLayoutManager(this)
+
         val tvListTitle: TextView = findViewById(R.id.tvListTitle)
         tvListTitle.text = itemManager.getCurrentListName()
 
-
         val itemTouchHelper = ItemTouchHelper(SwipeActions(itemAdapter))
         itemTouchHelper.attachToRecyclerView(rvItemList)
-        rvItemList.addOnItemTouchListener(RecyclerTouchListener(this, rvItemList, itemAdapter))
+        rvItemList.addOnItemTouchListener(RecyclerViewTouchListener(this, rvItemList, itemAdapter))
     }
 }

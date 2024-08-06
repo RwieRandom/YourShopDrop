@@ -6,6 +6,7 @@ import android.graphics.RenderEffect
 import android.graphics.Shader
 import android.os.Build
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -43,6 +44,11 @@ class Tools {
              imm.hideSoftInputFromWindow(textView.windowToken, 0)
          }
 
+         fun showKeyboard(textView: TextView){
+             val imm = textView.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+             imm.showSoftInput(textView, InputMethodManager.SHOW_IMPLICIT)
+         }
+
          fun defineSafeWindow(context: Activity) {
              val contentLayout = context.findViewById<ConstraintLayout>(R.id.main)
              ViewCompat.setOnApplyWindowInsetsListener(contentLayout) { view, windowInsets ->
@@ -55,6 +61,10 @@ class Tools {
                  )
                  windowInsets
              }
+         }
+
+         fun getKeyboardEnter(actionId: Int): Boolean {
+             return actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT
          }
 
      }

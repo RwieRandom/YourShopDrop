@@ -31,10 +31,16 @@ class ItemManager(context: Context) : SaveManager(context) {
      */
     fun setCurrentList(listName: String) {
         currentListName = listName
-
+        saveCurrentList()
         // Wenn die Liste nicht existiert, erstelle sie
         if (!listAllLists().contains(listName)) {
             createNewList(listName)
+        }
+    }
+
+    private fun saveCurrentList(){
+        currentListName?.let {
+            preferences.edit().putString(lastUsedListKey, it).apply()
         }
     }
 
@@ -44,6 +50,32 @@ class ItemManager(context: Context) : SaveManager(context) {
             setCurrentList(listName)
         }
         return result
+    }
+
+    fun deleteList(position: Int) {
+        val listName : String = getList(position)
+        deleteList(listName)
+    }
+
+    override fun deleteList(listName: String) {
+        super.deleteList(listName)
+        if (currentListName == listName) {
+            val allLists = listAllLists()
+
+            val otherLists = allLists.filter { it != listName }
+            if (otherLists.isNotEmpty()) {
+                setCurrentList(otherLists.first())
+            } else {
+                setCurrentList(defaultListName)
+            }
+        }
+    }
+
+    override fun renameList(oldListName: String, newListName: String) {
+        super.renameList(oldListName, newListName)
+        if (currentListName == oldListName) {
+            setCurrentList(newListName)
+        }
     }
 
     fun getCurrentListName(): String? {

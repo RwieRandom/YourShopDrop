@@ -6,10 +6,10 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
-class RecyclerTouchListener(
+class RecyclerViewTouchListener(
     context: Context,
     private val recyclerView: RecyclerView,
-    private val adapter: ItemAdapter
+    private val adapter: RecyclerView.Adapter<*>
 ) : RecyclerView.OnItemTouchListener {
 
     private val gestureDetector: GestureDetector
@@ -27,17 +27,33 @@ class RecyclerTouchListener(
         val position = rv.getChildAdapterPosition(childView ?: return false)
 
         // Check if the touch event is within the rename layout
-        if (position == adapter.getRenamePosition()) {
-            val viewHolder = rv.findViewHolderForAdapterPosition(position) ?: return false
-            val renameLayout = viewHolder.itemView.findViewById<View>(R.id.container_renameItem)
-            if (isTouchInsideView(e, renameLayout)) {
-                return false
+        if (adapter is ItemAdapter) {
+            if (position == (adapter as ItemAdapter).getRenamePosition()) {
+                val viewHolder = rv.findViewHolderForAdapterPosition(position) ?: return false
+                val renameLayout = viewHolder.itemView.findViewById<View>(R.id.container_renameItem)
+                if (isTouchInsideView(e, renameLayout)) {
+                    return false
+                }
+            }
+        } else if (adapter is ListAdapter) {
+            // Assuming ListAdapter has similar methods for rename/swiped position
+            if (position == (adapter as ListAdapter).getRenamePosition()) {
+                val viewHolder = rv.findViewHolderForAdapterPosition(position) ?: return false
+                val renameLayout = viewHolder.itemView.findViewById<View>(R.id.container_renameItem)
+                if (isTouchInsideView(e, renameLayout)) {
+                    return false
+                }
             }
         }
 
         if (childView == null || !gestureDetector.onTouchEvent(e)) {
-            adapter.clearSwipedPosition()
-            adapter.clearRenamePosition() // Clear the rename position as well
+            if (adapter is ItemAdapter) {
+                (adapter as ItemAdapter).clearSwipedPosition()
+                (adapter as ItemAdapter).clearRenamePosition()
+            } else if (adapter is ListAdapter) {
+                (adapter as ListAdapter).clearSwipedPosition()
+                (adapter as ListAdapter).clearRenamePosition()
+            }
         }
         return false
     }

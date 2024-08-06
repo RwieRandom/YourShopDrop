@@ -41,7 +41,8 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/AddItemInputLayout"
+        android:id="@+id/AddListInputLayout"
+        android:layout_marginBottom="5dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -53,19 +54,18 @@
             android:ellipsize="end"
             android:inputType="text"
             android:singleLine="true"
-            android:hint="@string/item_name" />
+            android:hint="@string/list_add" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginBottom="20dp">
+        android:layout_height="400dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvScreenList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
     </ScrollView>
 

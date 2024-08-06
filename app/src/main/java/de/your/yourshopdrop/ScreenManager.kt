@@ -2,11 +2,12 @@ package de.your.yourshopdrop
 
 import android.app.Activity
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.PopupWindow
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -14,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView
 class ScreenManager (private val context: Activity, private val itemAdapter: ItemAdapter, private val itemManager: ItemManager){
 
     private val screenInflater = ScreenInflater(context)
-    private val listAdapter = ListAdapter(context, itemManager, itemAdapter, this)
 
     private var currentActivePopup: PopupWindow? = null
 
@@ -66,14 +66,13 @@ class ScreenManager (private val context: Activity, private val itemAdapter: Ite
     }
 
     private fun screenAddItem(): ScreenInflater.Screen {
-        requireNotNull(itemAdapter) { "ListAdapter darf nicht null sein" }
 
         val inflatedScreen = screenInflater.createScreen(R.layout.screen_additem)
 
         val editText: EditText = inflatedScreen.screenView.findViewById(R.id.input_new_item)
 
         editText.setOnEditorActionListener { v, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
+            if (Tools.getKeyboardEnter(actionId)) {
                 if (editText.text.isNotEmpty()) {
                     itemAdapter.add(ListItem(editText.text.toString()))
                     editText.text.clear()
@@ -108,13 +107,18 @@ class ScreenManager (private val context: Activity, private val itemAdapter: Ite
         return inflatedScreen
     }
 
-    //TODO: Funktionalität für Auswahl von Listen
     private fun screenLists() : ScreenInflater.Screen {
         val inflatedScreen = screenInflater.createScreen(R.layout.screen_lists)
+
+        val listAdapter = ListAdapter(inflatedScreen.screenView, itemManager, itemAdapter, this, context)
 
         val screenList : RecyclerView = inflatedScreen.screenView.findViewById(R.id.rvScreenList)
         screenList.adapter = listAdapter
         screenList.layoutManager = LinearLayoutManager(context)
+
+        val itemTouchHelper = ItemTouchHelper(SwipeActions(listAdapter))
+        itemTouchHelper.attachToRecyclerView(screenList)
+        screenList.addOnItemTouchListener(RecyclerViewTouchListener(context, screenList, listAdapter))
 
         val btnClose: ImageButton = inflatedScreen.screenView.findViewById(R.id.btnCloseScreen)
         btnClose.setOnClickListener {
@@ -123,7 +127,29 @@ class ScreenManager (private val context: Activity, private val itemAdapter: Ite
 
         val btnAddList : ImageButton = inflatedScreen.screenView.findViewById(R.id.btnAddList)
         btnAddList.setOnClickListener {
+            val input = inflatedScreen.screenView.findViewById<EditText>(R.id.input_new_list)
 
+            input.visibility = View.VISIBLE
+            btnAddList.visibility = View.GONE
+            input.requestFocus()
+            Tools.showKeyboard(input)
+
+            input.setOnEditorActionListener { v, actionId, _ ->
+                if (Tools.getKeyboardEnter(actionId)) {
+                    if (input.text.isNotEmpty()) {
+                        listAdapter.add(input.text.toString())
+                        input.text.clear()
+                        Tools.hideKeyboard(v)
+                        input.visibility = View.GONE
+                        btnAddList.visibility = View.VISIBLE
+                    } else {
+                        hideScreen(inflatedScreen.popupWindow)
+                    }
+                    true
+                } else {
+                    false
+                }
+            }
         }
 
         return inflatedScreen
@@ -135,6 +161,7 @@ class ScreenManager (private val context: Activity, private val itemAdapter: Ite
         selectedItemSettings.visibility = View.GONE
         selectedItemLists.visibility = View.GONE
 
+        context.findViewById<TextView>(R.id.tvListTitle).text = itemManager.getCurrentListName()
         Tools.removeBlur(context.findViewById(R.id.scrollViewListItems))
     }
 }
