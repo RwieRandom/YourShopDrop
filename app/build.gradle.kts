@@ -11,8 +11,8 @@ android {
         applicationId = "de.your.yourshopdrop"
         minSdk = 29
         targetSdk = 34
-        versionCode = 12
-        versionName = "0.8"
+        versionCode = 73
+        versionName = "0.9"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -37,8 +37,6 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.cardview)
-    implementation(libs.material.v1120)
     implementation(libs.gson)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
