@@ -2,7 +2,6 @@ package de.your.yourshopdrop
 
 import android.app.Activity
 import android.view.View
-import android.widget.AdapterView
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.PopupWindow
@@ -119,7 +118,7 @@ class ScreenManager (private val context: Activity, private val itemAdapter: Ite
     private fun screenLists() : ScreenInflater.Screen {
         val inflatedScreen = screenInflater.createScreen(R.layout.screen_lists)
 
-        val listAdapter = ListAdapter(inflatedScreen.screenView, itemManager, itemAdapter, this, context)
+        val listAdapter = ListAdapter(itemManager, itemAdapter, this, context)
 
         val screenList : RecyclerView = inflatedScreen.screenView.findViewById(R.id.rvScreenList)
         screenList.adapter = listAdapter

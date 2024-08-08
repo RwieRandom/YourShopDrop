@@ -12,15 +12,11 @@ class RecyclerViewTouchListener(
     private val adapter: RecyclerView.Adapter<*>
 ) : RecyclerView.OnItemTouchListener {
 
-    private val gestureDetector: GestureDetector
-
-    init {
-        gestureDetector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
-            override fun onSingleTapUp(e: MotionEvent): Boolean {
-                return true
-            }
-        })
-    }
+    private val gestureDetector: GestureDetector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
+        override fun onSingleTapUp(e: MotionEvent): Boolean {
+            return true
+        }
+    })
 
     override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
         val childView = rv.findChildViewUnder(e.x, e.y)
@@ -28,7 +24,7 @@ class RecyclerViewTouchListener(
 
         // Check if the touch event is within the rename layout
         if (adapter is ItemAdapter) {
-            if (position == (adapter as ItemAdapter).getRenamePosition()) {
+            if (position == adapter.getRenamePosition()) {
                 val viewHolder = rv.findViewHolderForAdapterPosition(position) ?: return false
                 val renameLayout = viewHolder.itemView.findViewById<View>(R.id.container_renameItem)
                 if (isTouchInsideView(e, renameLayout)) {
@@ -37,7 +33,7 @@ class RecyclerViewTouchListener(
             }
         } else if (adapter is ListAdapter) {
             // Assuming ListAdapter has similar methods for rename/swiped position
-            if (position == (adapter as ListAdapter).getRenamePosition()) {
+            if (position == adapter.getRenamePosition()) {
                 val viewHolder = rv.findViewHolderForAdapterPosition(position) ?: return false
                 val renameLayout = viewHolder.itemView.findViewById<View>(R.id.container_renameItem)
                 if (isTouchInsideView(e, renameLayout)) {
@@ -46,13 +42,13 @@ class RecyclerViewTouchListener(
             }
         }
 
-        if (childView == null || !gestureDetector.onTouchEvent(e)) {
+        if (!gestureDetector.onTouchEvent(e)) {
             if (adapter is ItemAdapter) {
-                (adapter as ItemAdapter).clearSwipedPosition()
-                (adapter as ItemAdapter).clearRenamePosition()
+                adapter.clearSwipedPosition()
+                adapter.clearRenamePosition()
             } else if (adapter is ListAdapter) {
-                (adapter as ListAdapter).clearSwipedPosition()
-                (adapter as ListAdapter).clearRenamePosition()
+                adapter.clearSwipedPosition()
+                adapter.clearRenamePosition()
             }
         }
         return false

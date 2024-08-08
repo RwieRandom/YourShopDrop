@@ -91,7 +91,13 @@ class LanguageManager(private val activity: MainActivity) {
         Locale.setDefault(locale)
         val config = Configuration()
         config.setLocale(locale)
+
+        // Wenn du API 24 oder höher anvisierst
+        activity.createConfigurationContext(config)
+
+        // Wenn du den Kontext nicht ändern willst, aber Ressourcen neu laden möchtest
         activity.resources.updateConfiguration(config, activity.resources.displayMetrics)
+
     }
 
 }

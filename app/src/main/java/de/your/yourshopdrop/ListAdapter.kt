@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
-class ListAdapter(private val view: View, private val itemManager: ItemManager, private val itemAdapter: ItemAdapter, private val screenManager: ScreenManager, private val activity: Activity) : RecyclerView.Adapter<ListAdapter.ItemViewHolder>() {
+class ListAdapter(private val itemManager: ItemManager, private val itemAdapter: ItemAdapter, private val screenManager: ScreenManager, private val activity: Activity) : RecyclerView.Adapter<ListAdapter.ItemViewHolder>() {
 
     private var swipedPosition = -1
     private var renamePosition = -1
@@ -74,7 +74,7 @@ class ListAdapter(private val view: View, private val itemManager: ItemManager, 
             renameEditText.setOnEditorActionListener { v, actionId, _ ->
                 if (Tools.getKeyboardEnter(actionId)) {
                     val newName = renameEditText.text.toString()
-                    renameEditText.setText("")
+                    renameEditText.text!!.clear()
                     itemManager.renameList(listTitle.text.toString(), newName)
                     renamePosition = -1
                     notifyItemChanged(position)

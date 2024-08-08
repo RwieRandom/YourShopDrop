@@ -88,7 +88,7 @@ class ItemManager(context: Context) : SaveManager(context) {
         }
     }
 
-    fun loadItems(): MutableList<ListItem> {
+    private fun loadItems(): MutableList<ListItem> {
         return currentListName?.let {
             loadList(it)
         } ?: mutableListOf()
@@ -100,32 +100,14 @@ class ItemManager(context: Context) : SaveManager(context) {
         }
     }
 
-    fun removeItem(item: ListItem) {
-        currentListName?.let {
-            removeFromList(it, item)
-        }
-    }
-
     fun removeItem(position: Int) {
-        currentListName?.let {
-            val items = loadItems()
-            items.removeAt(position)
-            saveItems(items)
-        }
+        removeFromList(currentListName ?: return, getItem(position))
     }
 
     fun renameItem(position: Int, newName: String) {
-        currentListName?.let {
-            val items = loadItems()
-            items[position].title = newName
-            saveItems(items)
-        }
-    }
-
-    fun deleteAllItems() {
-        currentListName?.let {
-            deleteList(it)
-        }
+        val oldItem = getItem(position)
+        val newItem = ListItem(newName, oldItem.quantity, oldItem.isChecked)
+        editItemInList(currentListName ?: return, oldItem, newItem)
     }
 
     fun updateItem(item: ListItem, isChecked: Boolean) {

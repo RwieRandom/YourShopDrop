@@ -90,7 +90,7 @@ class ItemAdapter(private val itemManager: ItemManager) : RecyclerView.Adapter<I
             renameEditText.setOnEditorActionListener { v, actionId, event ->
                 if (actionId == EditorInfo.IME_ACTION_DONE || (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN)) {
                     val newName = renameEditText.text.toString()
-                    renameEditText.setText("")
+                    renameEditText.text!!.clear()
                     itemManager.renameItem(position, newName)
                     renamePosition = -1
                     notifyItemChanged(position)
@@ -102,29 +102,6 @@ class ItemAdapter(private val itemManager: ItemManager) : RecyclerView.Adapter<I
                 }
             }
         }
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun deleteCheckedItems() {
-        val itemsToDelete = mutableListOf<ListItem>()
-
-        for (item in itemManager.loadItems()) {
-            if (item.isChecked) {
-                itemsToDelete.add(item)
-            }
-        }
-
-        for (item in itemsToDelete) {
-            itemManager.removeItem(item)
-        }
-
-        notifyDataSetChanged()
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun deleteList() {
-        itemManager.deleteAllItems()
-        notifyDataSetChanged()
     }
 
     private fun deleteItem(position: Int) {

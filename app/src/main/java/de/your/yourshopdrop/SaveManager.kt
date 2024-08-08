@@ -109,7 +109,7 @@ open class SaveManager(val context: Context) {
      * @param oldItem Das zu ändernde Element.
      * @param newItem Der neue Wert des Elements.
      */
-    inline fun <reified T> renameItemInList(listName: String, oldItem: T, newItem: T) {
+    inline fun <reified T> editItemInList(listName: String, oldItem: T, newItem: T) {
         val list = loadList<T>(listName)
         val index = list.indexOf(oldItem)
         if (index != -1) {
