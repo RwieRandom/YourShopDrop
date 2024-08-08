@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="settings">Impostazioni</string>
+
+    <string name="lists">Le tue liste</string>
+
+    <string name="confirm">Confermare</string>
+
+    <string name="cancel">Annulla</string>
+
+    <string name="item_add">Aggiungi articolo</string>
+
+    <string name="item_name">Nome dell\'elemento</string>
+
+    <string name="item_rename">Rinomina elemento</string>
+
+    <string name="list_add">Aggiungi elenco</string>
+
+    <string name="item_quantity">Quantità</string>
+
+    <string name="select_language">Seleziona la lingua</string>
+
+    <string name="description_AddItems">Aggiunge elementi all\'elenco</string>
+
+    <string name="description_ShowLists">Mostra un elenco di tutti i tuoi elenchi</string>
+
+    <string name="description_ShowSettings">Mostra le impostazioni</string>
+
+    <string name="description_CloseScreen">Chiude la schermata corrente</string>
+
+    <string name="placeholder_title">Lista della spesa</string>
+</resources>

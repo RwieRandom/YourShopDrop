@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <array name="language">
+    <string-array name="language">
         <item>English</item>
         <item>Deutsch</item>
-    </array>
+        <item>Français</item>
+        <item>Español</item>
+        <item>Italiano</item>
+    </string-array>
 </resources>

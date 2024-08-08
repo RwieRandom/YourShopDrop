@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings">Paramètres</string>
+
+    <string name="lists">Vos listes</string>
+
+    <string name="confirm">Confirmer</string>
+
+    <string name="cancel">Annuler</string>
+
+    <string name="item_add">Ajouter un item</string>
+
+    <string name="item_name">Nom de l\'article</string>
+
+    <string name="item_rename">Renommer l\'élément</string>
+
+    <string name="list_add">Ajouter la liste</string>
+
+    <string name="item_quantity">Quantité</string>
+
+    <string name="select_language">Choisir la langue</string>
+
+    <string name="description_AddItems">Ajoute des éléments à la liste</string>
+
+    <string name="description_ShowLists">Affiche une liste de toutes vos listes</string>
+
+    <string name="description_ShowSettings">Affiche les paramètres</string>
+
+    <string name="description_CloseScreen">Ferme l\'écran actuel</string>
+
+    <string name="placeholder_title">Liste de courses</string>
+</resources>
