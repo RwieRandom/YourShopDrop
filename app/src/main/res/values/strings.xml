@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name" translatable="false">YourShopDrop</string>
 
     <string name="settings">Settings</string>
@@ -29,4 +29,14 @@
     <string name="placeholder_title">Shoppinglist</string>
     <string name="placeholder_item" translatable="false">Item</string>
     <string name="placeholder_quantity" translatable="false">Quantity</string>
+
+    <string-array name="quantity_units" tools:ignore="InconsistentArrays">
+        <item>pcs</item>
+        <item>kg</item>
+        <item>g</item>
+        <item>lb</item>
+        <item>oz</item>
+        <item>ml</item>
+        <item>l</item>
+    </string-array>
 </resources>

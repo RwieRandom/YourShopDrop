@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="settings">Paramètres</string>
 
     <string name="lists">Vos listes</string>
@@ -37,4 +37,12 @@
     <string name="description_AddItem">Ajoute un nouvel élément</string>
     <string name="description_OpenList">Ouvre la liste</string>
     <string name="description_Quantity">Définit la quantité de l\'élément sélectionné</string>
+
+    <string-array name="quantity_units" tools:ignore="InconsistentArrays">
+        <item>pcs</item>
+        <item>kg</item>
+        <item>g</item>
+        <item>ml</item>
+        <item>l</item>
+    </string-array>
 </resources>

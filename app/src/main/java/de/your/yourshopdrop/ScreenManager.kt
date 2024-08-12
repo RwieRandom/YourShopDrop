@@ -81,11 +81,10 @@ class ScreenManager (private val context: Activity, private val itemAdapter: Ite
 
         val inflatedScreen = screenInflater.createScreen(R.layout.screen_additem)
 
-        addItemTitle = inflatedScreen.screenView.findViewById<EditText>(R.id.input_new_item)
-        addItemQuantity = inflatedScreen.screenView.findViewById<TextInputEditText>(R.id.input_quantity)
-        addItemUnit = inflatedScreen.screenView.findViewById<Spinner>(R.id.spinner_unit)
+        addItemTitle = inflatedScreen.screenView.findViewById(R.id.input_new_item)
+        addItemQuantity = inflatedScreen.screenView.findViewById(R.id.input_quantity)
+        addItemUnit = inflatedScreen.screenView.findViewById(R.id.spinner_unit)
 
-        //TODO: Anzahl in allen Sprachen, vll. über strings.xml
         val units = activity.resources.getStringArray(R.array.quantity_units)
         val adapter = object : ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, units) {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
