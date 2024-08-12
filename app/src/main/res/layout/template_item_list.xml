@@ -7,9 +7,18 @@
     <TextView
         android:id="@+id/tvItemQuantity"
         style="@style/Item.Quantity"
-        android:layout_width="80dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
+        android:paddingVertical="16dp"
+        android:text="@string/placeholder_quantity" />
+
+    <TextView
+        android:id="@+id/tvItemUnit"
+        style="@style/Item.Quantity"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/tvItemQuantity"
         android:paddingVertical="16dp"
         android:text="@string/placeholder_quantity" />
 
@@ -19,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toStartOf="@+id/cbItemChecked"
-        android:layout_toEndOf="@+id/tvItemQuantity"
+        android:layout_toEndOf="@+id/tvItemUnit"
         android:padding="16dp"
         android:text="@string/placeholder_item" />
 

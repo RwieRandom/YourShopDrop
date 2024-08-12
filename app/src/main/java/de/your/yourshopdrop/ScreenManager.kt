@@ -1,7 +1,10 @@
 package de.your.yourshopdrop
 
 import android.app.Activity
+import android.graphics.Typeface
 import android.view.View
+import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.PopupWindow
@@ -15,14 +18,20 @@ import com.google.android.material.textfield.TextInputEditText
 
 
 class ScreenManager (private val context: Activity, private val itemAdapter: ItemAdapter, private val itemManager: ItemManager, private val activity: MainActivity){
+    private lateinit var addItemTitle : EditText
+    private lateinit var addItemQuantity : EditText
+    private lateinit var addItemUnit : Spinner
 
-    private val screenInflater = ScreenInflater(context)
+    private var currentActiveScreen: Screen = Screen.START
+    private lateinit var inflatedScreen: ScreenInflater.Screen
 
+    private val screenInflater = ScreenInflater(context, this)
     private var currentActivePopup: PopupWindow? = null
+
+
 
     fun showScreen(screen: Screen){
 
-        val inflatedScreen: ScreenInflater.Screen
         hideScreen(currentActivePopup)
 
         val selectedItemSettings = context.findViewById<ConstraintLayout>(R.id.selectedNavbarItem_Settings)
@@ -33,24 +42,25 @@ class ScreenManager (private val context: Activity, private val itemAdapter: Ite
         when(screen){
             Screen.ADD_ITEM -> {
                 inflatedScreen = screenAddItem()
-
+                currentActiveScreen = Screen.ADD_ITEM
                 Tools.blurView(scrollViewListItems)
             }
             Screen.SETTINGS -> {
                 inflatedScreen = screenSettings()
                 selectedItemSettings.visibility = View.VISIBLE
-
+                currentActiveScreen = Screen.SETTINGS
                 Tools.blurView(scrollViewListItems)
             }
             Screen.LISTS -> {
                 inflatedScreen = screenLists()
                 selectedItemLists.visibility = View.VISIBLE
-
+                currentActiveScreen = Screen.LISTS
                 Tools.blurView(scrollViewListItems)
             }
             Screen.START -> {
                 //TODO: Startscreen zeigen
                 inflatedScreen = screenAddItem()
+                currentActiveScreen = Screen.START
             }
         }
 
@@ -71,21 +81,47 @@ class ScreenManager (private val context: Activity, private val itemAdapter: Ite
 
         val inflatedScreen = screenInflater.createScreen(R.layout.screen_additem)
 
-        val title= inflatedScreen.screenView.findViewById<EditText>(R.id.input_new_item)
-        val quantity = inflatedScreen.screenView.findViewById<TextInputEditText>(R.id.input_quantity)
+        addItemTitle = inflatedScreen.screenView.findViewById<EditText>(R.id.input_new_item)
+        addItemQuantity = inflatedScreen.screenView.findViewById<TextInputEditText>(R.id.input_quantity)
+        addItemUnit = inflatedScreen.screenView.findViewById<Spinner>(R.id.spinner_unit)
 
-        title.setOnEditorActionListener { v, actionId, _ ->
+        //TODO: Anzahl in allen Sprachen, vll. über strings.xml
+        val units = activity.resources.getStringArray(R.array.quantity_units)
+        val adapter = object : ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, units) {
+            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val textView = super.getView(position, convertView, parent) as TextView
+                textView.setTypeface(null, Typeface.BOLD)
+                return textView
+            }
+
+            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val textView = super.getDropDownView(position, convertView, parent) as TextView
+                textView.setTypeface(null, Typeface.BOLD)
+                return textView
+            }
+        }
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        addItemUnit.adapter = adapter
+
+        addItemTitle.setOnEditorActionListener { v, actionId, _ ->
             if (Tools.getKeyboardEnter(actionId)) {
-                addListItem(inflatedScreen, v, title, quantity)
+                if (addItem()) {
+                    hideScreen(inflatedScreen.popupWindow)
+                    Tools.hideKeyboard(v)
+                }
                 true
             } else {
                 false
             }
         }
 
-        quantity.setOnEditorActionListener { v, actionId, _ ->
+        addItemQuantity.setOnEditorActionListener { v, actionId, _ ->
             if (Tools.getKeyboardEnter(actionId)) {
-                addListItem(inflatedScreen, v, title, quantity)
+                if (addItem()) {
+                    hideScreen(inflatedScreen.popupWindow)
+                    Tools.hideKeyboard(v)
+                }
                 true
             } else {
                 false
@@ -168,21 +204,35 @@ class ScreenManager (private val context: Activity, private val itemAdapter: Ite
         val selectedItemLists: ConstraintLayout = context.findViewById(R.id.selectedNavbarItem_Lists)
         selectedItemSettings.visibility = View.GONE
         selectedItemLists.visibility = View.GONE
+        checkInflatedScreen()
 
-        context.findViewById<TextView>(R.id.tvListTitle).text = itemManager.getCurrentListName()
         Tools.removeBlur(context.findViewById(R.id.scrollViewListItems))
     }
 
-    private fun addListItem(inflatedScreen: ScreenInflater.Screen, v: TextView,title: EditText, quantity: EditText){
-        if (title.text.isEmpty()) { return }
+    private fun checkInflatedScreen(){
+        when(currentActiveScreen){
+            Screen.ADD_ITEM -> {
+                addItem()
+            }
+            Screen.LISTS -> {
+                context.findViewById<TextView>(R.id.tvListTitle).text = itemManager.getCurrentListName()
+            }
+            else -> { }
+        }
+    }
 
-        val quantityText = quantity.text.toString()
-        val finalQuantityText = quantityText.ifEmpty { "1" }
+    private fun addItem() : Boolean{
+        val title = addItemTitle.text
+        if (title.isEmpty()) { return false }
 
-        itemAdapter.add(ListItem(title.text.toString(), finalQuantityText))
-        title.text.clear()
-        quantity.text.clear()
-        hideScreen(inflatedScreen.popupWindow)
-        Tools.hideKeyboard(v)
+        val quantity: Int = addItemQuantity.text.toString().toIntOrNull() ?: 1
+
+        val unit = addItemUnit.selectedItem.toString()
+
+        itemAdapter.add(ListItem(title.toString(), quantity, unit))
+        addItemTitle.text.clear()
+        addItemQuantity.text.clear()
+
+        return true
     }
 }

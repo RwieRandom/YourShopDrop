@@ -12,7 +12,7 @@ import android.widget.LinearLayout
 import android.widget.PopupWindow
 
 
-class ScreenInflater(private val context: Activity) {
+class ScreenInflater(private val context: Activity, private val screenManager: ScreenManager) {
 
     private val inflater = LayoutInflater.from(context)
 
@@ -46,7 +46,7 @@ class ScreenInflater(private val context: Activity) {
         // Entferne die Hintergrund-View wenn das Popup geschlossen wird
         popupWindow.setOnDismissListener {
             parentView.removeView(backgroundView)
-            ScreenManager(context, ItemAdapter(ItemManager(context)), ItemManager(context), context as MainActivity).onScreenClose()
+            screenManager.onScreenClose()
         }
 
         popupWindow.showAtLocation(context.window.decorView, Gravity.TOP, 0, 0)

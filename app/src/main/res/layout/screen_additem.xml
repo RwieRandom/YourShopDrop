@@ -32,7 +32,7 @@
         android:orientation="horizontal"
         android:layout_marginBottom="30dp"
         android:paddingHorizontal="8dp"
-        android:weightSum="3">
+        android:weightSum="4"> <!-- angepasst -->
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
@@ -65,13 +65,25 @@
                 android:layout_height="wrap_content"
                 android:autofillHints="no"
                 android:ellipsize="end"
-                android:inputType="text"
+                android:inputType="number"
                 android:singleLine="true"
                 android:hint="@string/item_quantity" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <Spinner
+            android:id="@+id/spinner_unit"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:entries="@array/quantity_units"
+            android:background="@android:color/transparent"
+            android:layout_marginStart="8dp"
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical" />
+
     </LinearLayout>
+
 
 </LinearLayout>
 
