@@ -99,6 +99,7 @@ open class SaveManager(val context: Context) {
     fun listAllLists(): List<String> {
         val files = context.filesDir.listFiles()
         return files?.filter { it.name.endsWith(fileExtension) }
+            ?.sortedBy { it.lastModified() }
             ?.map { it.name.removeSuffix(fileExtension) }
             ?: emptyList()
     }

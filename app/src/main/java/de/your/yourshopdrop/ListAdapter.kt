@@ -1,5 +1,6 @@
 package de.your.yourshopdrop
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,7 @@ class ListAdapter(private val itemManager: ItemManager, private val itemAdapter:
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
+    @SuppressLint("NotifyDataSetChanged")
     fun add(listName: String) {
         itemManager.createNewList(listName)
         notifyItemInserted(itemCount - 1)
@@ -89,9 +91,10 @@ class ListAdapter(private val itemManager: ItemManager, private val itemAdapter:
 
     private fun deleteList(position: Int) {
         itemManager.deleteList(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, itemCount)
         activity.findViewById<TextView>(R.id.tvListTitle).text = itemManager.getCurrentListName()
         itemAdapter.refreshList()
-        notifyItemRemoved(position)
     }
 
     fun setSwipedPosition(position: Int) {
