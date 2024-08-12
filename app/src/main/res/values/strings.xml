@@ -17,6 +17,14 @@
     <string name="description_ShowLists">Shows a list of all your lists</string>
     <string name="description_ShowSettings">Shows the settings</string>
     <string name="description_CloseScreen">Closes the current screen</string>
+    <string name="description_RenameItem">Renames the selected item</string>
+    <string name="description_DeleteItem">Deletes the selected item</string>
+    <string name="description_RenameList">Renames the selected list</string>
+    <string name="description_DeleteList">Deletes the selected list</string>
+    <string name="description_AddList">Adds a new list</string>
+    <string name="description_AddItem">Adds a new item</string>
+    <string name="description_OpenList">Opens the list</string>
+    <string name="description_Quantity">Sets the quantity of the selected item</string>
 
     <string name="placeholder_title">Shoppinglist</string>
     <string name="placeholder_item" translatable="false">Item</string>

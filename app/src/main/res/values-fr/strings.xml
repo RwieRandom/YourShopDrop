@@ -29,4 +29,12 @@
     <string name="description_CloseScreen">Ferme l\'écran actuel</string>
 
     <string name="placeholder_title">Liste de courses</string>
+    <string name="description_RenameItem">Renomme l\'élément sélectionné</string>
+    <string name="description_DeleteItem">Supprime l\'élément sélectionné</string>
+    <string name="description_RenameList">Renomme la liste sélectionnée</string>
+    <string name="description_DeleteList">Supprime la liste sélectionnée</string>
+    <string name="description_AddList">Ajoute une nouvelle liste</string>
+    <string name="description_AddItem">Ajoute un nouvel élément</string>
+    <string name="description_OpenList">Ouvre la liste</string>
+    <string name="description_Quantity">Définit la quantité de l\'élément sélectionné</string>
 </resources>

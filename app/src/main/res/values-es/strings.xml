@@ -29,4 +29,12 @@
     <string name="description_CloseScreen">Cierra la pantalla actual</string>
 
     <string name="placeholder_title">Lista de la compra</string>
+    <string name="description_RenameItem">Cambia el nombre del elemento seleccionado</string>
+    <string name="description_DeleteItem">Elimina el elemento seleccionado</string>
+    <string name="description_RenameList">Cambia el nombre de la lista seleccionada</string>
+    <string name="description_DeleteList">Elimina la lista seleccionada</string>
+    <string name="description_AddList">Añade una nueva lista</string>
+    <string name="description_AddItem">Añade un nuevo elemento</string>
+    <string name="description_OpenList">Abre la lista</string>
+    <string name="description_Quantity">Establece la cantidad del artículo seleccionado</string>
 </resources>

@@ -45,6 +45,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/btnSwipeRename"
+            android:contentDescription="@string/description_RenameList"
             android:src="@drawable/ic_edit"
             android:background="@drawable/shape_button_edit"
             app:tint="@color/white" />
@@ -53,6 +54,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/btnSwipeDelete"
+            android:contentDescription="@string/description_DeleteList"
             android:src="@drawable/ic_delete"
             android:background="@drawable/shape_button_delete"
             app:tint="@color/white" />

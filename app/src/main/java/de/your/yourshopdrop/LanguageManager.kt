@@ -97,7 +97,6 @@ class LanguageManager(private val activity: MainActivity) {
 
         // Wenn du den Kontext nicht ändern willst, aber Ressourcen neu laden möchtest
         activity.resources.updateConfiguration(config, activity.resources.displayMetrics)
-
     }
 
 }

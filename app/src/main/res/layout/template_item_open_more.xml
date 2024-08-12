@@ -4,8 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:layout_marginBottom="5dp">
-    <!-- android:background="@drawable/shape_button_border" -->
-
 
     <ImageButton
         android:id="@+id/btnOpenMore"
@@ -13,6 +11,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
         android:background="@color/transparent"
+        android:contentDescription="@string/description_OpenList"
         android:src="@drawable/ic_arrow_left"
         app:layout_constraintEnd_toEndOf="parent"
         app:tint="?attr/colorPrimary" />
@@ -50,6 +49,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/btnSwipeRename"
+            android:contentDescription="@string/description_RenameItem"
             android:src="@drawable/ic_edit"
             android:background="@drawable/shape_button_edit"
             app:tint="@color/white" />
@@ -58,6 +58,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/btnSwipeDelete"
+            android:contentDescription="@string/description_DeleteItem"
             android:src="@drawable/ic_delete"
             android:background="@drawable/shape_button_delete"
             app:tint="@color/white" />
