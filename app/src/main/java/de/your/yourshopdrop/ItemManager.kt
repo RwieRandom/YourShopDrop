@@ -6,7 +6,7 @@ import android.content.SharedPreferences
 class ItemManager(context: Context) : SaveManager(context) {
 
     private var currentListName: String? = null
-    private val defaultListName = context.getString(R.string.placeholder_title)
+    private var defaultListName = context.getString(R.string.placeholder_title)
     private val preferences: SharedPreferences = context.getSharedPreferences("ItemManagerPrefs", Context.MODE_PRIVATE)
     private val lastUsedListKey = "lastUsedList"
 
@@ -66,6 +66,7 @@ class ItemManager(context: Context) : SaveManager(context) {
             if (otherLists.isNotEmpty()) {
                 setCurrentList(otherLists.first())
             } else {
+                defaultListName = context.getString(R.string.placeholder_title)
                 setCurrentList(defaultListName)
             }
         }
