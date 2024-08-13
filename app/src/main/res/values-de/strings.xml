@@ -45,4 +45,5 @@
         <item>ml</item>
         <item>l</item>
     </string-array>
+    <string name="list_rename">Liste umbenennen</string>
 </resources>

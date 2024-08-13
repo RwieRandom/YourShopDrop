@@ -9,6 +9,7 @@
     <string name="item_name">Itemname</string>
     <string name="item_rename">Rename Item</string>
     <string name="list_add">Add List</string>
+    <string name="list_rename">Rename List</string>
     <string name="item_quantity">Quantity</string>
     <string name="select_language">Select Language</string>
 

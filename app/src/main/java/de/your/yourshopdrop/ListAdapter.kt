@@ -41,8 +41,8 @@ class ListAdapter(private val itemManager: ItemManager, private val itemAdapter:
             val listTitle = findViewById<TextView>(R.id.template_item_title_more)
             val btnShowList = findViewById<ImageButton>(R.id.btnOpenMore)
             val swipeLayout = findViewById<LinearLayout>(R.id.swipeLayout)
-            val renameLayout = findViewById<TextInputLayout>(R.id.container_renameItem)
-            val renameEditText = findViewById<TextInputEditText>(R.id.input_rename_item)
+            val renameLayout = findViewById<TextInputLayout>(R.id.editItemContainer)
+            val renameEditText = findViewById<TextInputEditText>(R.id.editItemTitle)
             val btnRename = findViewById<ImageButton>(R.id.btnSwipeRename)
             val btnDelete = findViewById<ImageButton>(R.id.btnSwipeDelete)
 
@@ -52,7 +52,13 @@ class ListAdapter(private val itemManager: ItemManager, private val itemAdapter:
 
             if(renamePosition == position){
                 renameLayout.visibility = View.VISIBLE
-                renameLayout.hint = currentList
+                renameEditText.setOnFocusChangeListener { _, hasFocus ->
+                    if(hasFocus){
+                        renameEditText.hint = listTitle.text.toString()
+                    } else {
+                        renameEditText.hint = ""
+                    }
+                }
             } else {
                 renameLayout.visibility = View.GONE
             }

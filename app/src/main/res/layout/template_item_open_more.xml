@@ -65,22 +65,22 @@
     </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/container_renameItem"
+        android:id="@+id/editItemContainer"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:background="?android:attr/colorBackground"
+        android:hint="@string/list_rename"
         android:visibility="gone">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/input_rename_item"
+            android:id="@+id/editItemTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autofillHints="no"
             android:ellipsize="end"
-            android:hint="@string/item_rename"
             android:inputType="text"
             android:maxLines="1"
             android:singleLine="true" />
