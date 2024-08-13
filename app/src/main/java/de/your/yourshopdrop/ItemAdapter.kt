@@ -1,19 +1,19 @@
 package de.your.yourshopdrop
 
 import android.annotation.SuppressLint
-import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
-import android.view.KeyEvent
+import android.content.Context
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
+import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 
 //TODO: Werden items abgehakt, dann werden sie nach ganz unten verschoben. Wird ein neues item hinzugefügt, soll das über den abgehakten hinzugefügt werden
 class ItemAdapter(private val itemManager: ItemManager) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
@@ -51,8 +51,11 @@ class ItemAdapter(private val itemManager: ItemManager) : RecyclerView.Adapter<I
             val itemUnit = findViewById<TextView>(R.id.tvItemUnit)
             val checkBox = findViewById<CheckBox>(R.id.cbItemChecked)
             val swipeLayout = findViewById<LinearLayout>(R.id.swipeLayout)
-            val renameLayout = findViewById<TextInputLayout>(R.id.container_renameItem)
-            val renameEditText = findViewById<TextInputEditText>(R.id.input_rename_item)
+            val editItemLayout = findViewById<LinearLayout>(R.id.editItemContainer)
+            val editItemTitle = findViewById<TextInputEditText>(R.id.editItemTitle)
+            val editItemQuantity = findViewById<TextInputEditText>(R.id.editItemQuantity)
+            val editItemUnit = findViewById<Spinner>(R.id.editItemUnit)
+            val units = context.resources.getStringArray(R.array.quantity_units)
             val btnRename = findViewById<ImageButton>(R.id.btnSwipeRename)
             val btnDelete = findViewById<ImageButton>(R.id.btnSwipeDelete)
 
@@ -60,24 +63,19 @@ class ItemAdapter(private val itemManager: ItemManager) : RecyclerView.Adapter<I
             itemQuantity.text = currentItem.quantity.toString()
             itemUnit.text = currentItem.unit
             checkBox.isChecked = currentItem.isChecked
-            setStrikethrough(itemTitle, currentItem.isChecked)
+            setStrikethrough(holder.itemView, currentItem.isChecked)
 
             checkBox.setOnCheckedChangeListener { _, isChecked ->
                 itemManager.updateItem(currentItem, isChecked)
-                setStrikethrough(itemTitle, isChecked)
+                setStrikethrough(holder.itemView, isChecked)
             }
 
             swipeLayout.visibility = if (position == swipedPosition) View.VISIBLE else View.GONE
 
             if(renamePosition == position){
-                renameLayout.visibility = View.VISIBLE
-                renameLayout.hint = currentItem.title
-                itemTitle.visibility = View.GONE
-                checkBox.visibility = View.GONE
+                showRenameLayout(position, currentItem, context, itemTitle, checkBox, editItemLayout, editItemTitle, editItemQuantity, editItemUnit, units)
             } else {
-                renameLayout.visibility = View.GONE
-                itemTitle.visibility = View.VISIBLE
-                checkBox.visibility = View.VISIBLE
+                hideRenameLayout(editItemLayout, itemTitle, checkBox, editItemTitle)
             }
 
             btnRename.setOnClickListener {
@@ -87,21 +85,6 @@ class ItemAdapter(private val itemManager: ItemManager) : RecyclerView.Adapter<I
             btnDelete.setOnClickListener {
                 deleteItem(position)
                 swipedPosition = -1
-            }
-
-            renameEditText.setOnEditorActionListener { v, actionId, event ->
-                if (actionId == EditorInfo.IME_ACTION_DONE || (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN)) {
-                    val newName = renameEditText.text.toString()
-                    renameEditText.text!!.clear()
-                    itemManager.renameItem(position, newName)
-                    renamePosition = -1
-                    notifyItemChanged(position)
-
-                    Tools.hideKeyboard(v)
-                    true
-                } else {
-                    false
-                }
             }
         }
     }
@@ -130,11 +113,12 @@ class ItemAdapter(private val itemManager: ItemManager) : RecyclerView.Adapter<I
         notifyItemChanged(previousRenamePosition)
     }
 
-    private fun setStrikethrough(textView: TextView, isChecked: Boolean) {
+    private fun setStrikethrough(context: View, isChecked: Boolean) {
+        val strikethrougLine = context.findViewById<View>(R.id.itemStrikethroughLine)
         if (isChecked) {
-            textView.paintFlags = textView.paintFlags or STRIKE_THRU_TEXT_FLAG
+            strikethrougLine.visibility = View.VISIBLE
         } else {
-            textView.paintFlags = textView.paintFlags and STRIKE_THRU_TEXT_FLAG.inv()
+            strikethrougLine.visibility = View.GONE
         }
     }
 
@@ -145,6 +129,105 @@ class ItemAdapter(private val itemManager: ItemManager) : RecyclerView.Adapter<I
     private fun showRenameLayout(position: Int) {
         renamePosition = position
         notifyItemChanged(position)
+    }
+
+    private fun showRenameLayout(position: Int, currentItem: ListItem, context: Context, itemTitle: TextView, checkBox: CheckBox, editItemLayout: LinearLayout, editItemTitle: TextInputEditText, editItemQuantity: TextInputEditText, editItemUnit: Spinner, units: Array<String>){
+        editItemLayout.visibility = View.VISIBLE
+        itemTitle.visibility = View.GONE
+        checkBox.visibility = View.GONE
+
+        editItemTitle.hint = currentItem.title
+        editItemQuantity.hint = currentItem.quantity.toString()
+
+        editItemTitle.setOnFocusChangeListener { v, hasFocus ->
+            if(hasFocus){
+                Tools.showKeyboard(v as TextView)
+            } else {
+                Tools.hideKeyboard(v as TextView)
+            }
+        }
+
+        editItemQuantity.setOnFocusChangeListener { v, hasFocus ->
+            if(hasFocus){
+                Tools.showKeyboard(v as TextView)
+            } else {
+                Tools.hideKeyboard(v as TextView)
+            }
+        }
+
+        val adapter = object : ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, units) {
+            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val textView = super.getView(position, convertView, parent) as TextView
+                textView.setTypeface(null, Typeface.BOLD)
+                return textView
+            }
+
+            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val textView = super.getDropDownView(position, convertView, parent) as TextView
+                textView.setTypeface(null, Typeface.BOLD)
+                return textView
+            }
+        }
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        editItemUnit.adapter = adapter
+        editItemUnit.setSelection(units.indexOf(currentItem.unit))
+
+
+        editItemTitle.setOnEditorActionListener { v, actionId, _ ->
+            if (Tools.getKeyboardEnter(actionId)) {
+                if(editItem(currentItem, position, editItemTitle, editItemQuantity, editItemUnit)){ Tools.hideKeyboard(v) }
+                true
+            } else {
+                false
+            }
+        }
+
+        editItemQuantity.setOnEditorActionListener { v, actionId, _ ->
+            if (Tools.getKeyboardEnter(actionId)) {
+                if(editItem(currentItem, position, editItemTitle, editItemQuantity, editItemUnit)){ Tools.hideKeyboard(v) }
+                true
+            } else {
+                false
+            }
+        }
+    }
+
+    private fun hideRenameLayout(renameLayout: LinearLayout, itemTitle: TextView, checkBox: CheckBox, renameEditText: TextInputEditText){
+        renameLayout.visibility = View.GONE
+        itemTitle.visibility = View.VISIBLE
+        checkBox.visibility = View.VISIBLE
+
+        renameEditText.text!!.clear()
+        renameEditText.clearFocus()
+    }
+
+    private fun editItem(currentItem: ListItem, position: Int, editItemTitle: TextInputEditText, editItemQuantity: TextInputEditText, editItemUnit: Spinner): Boolean{
+
+        val newName = editItemTitle.text.toString()
+        val title = newName.ifEmpty {
+            currentItem.title
+        }
+
+        val newQuantityString = editItemQuantity.text.toString()
+        val quantity = if(newQuantityString.isEmpty()){
+            currentItem.quantity
+        } else {
+            newQuantityString.toIntOrNull() ?: 1
+        }
+
+        val unit = editItemUnit.selectedItem.toString()
+
+        itemManager.editItem(position, ListItem(title, quantity, unit, currentItem.isChecked))
+
+        editItemTitle.text!!.clear()
+        editItemQuantity.text!!.clear()
+        editItemTitle.clearFocus()
+        editItemQuantity.clearFocus()
+
+        renamePosition = -1
+        notifyItemChanged(position)
+
+        return true
     }
 }
 

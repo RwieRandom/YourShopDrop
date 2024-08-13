@@ -105,10 +105,8 @@ class ItemManager(context: Context) : SaveManager(context) {
         removeFromList(currentListName ?: return, getItem(position))
     }
 
-    //TODO: Edit Item Funktion für Name, Menge und Unit hinzufügen
-    fun renameItem(position: Int, newName: String) {
+    fun editItem(position: Int, newItem: ListItem) {
         val oldItem = getItem(position)
-        val newItem = ListItem(newName, oldItem.quantity, oldItem.unit,oldItem.isChecked)
         editItemInList(currentListName ?: return, oldItem, newItem)
     }
 

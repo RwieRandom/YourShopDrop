@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <View
+        android:id="@+id/itemStrikethroughLine"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@id/cbItemChecked"
+        android:background="?attr/colorPrimary"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/tvItemQuantity"
@@ -11,7 +21,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:paddingVertical="16dp"
-        android:text="@string/placeholder_quantity" />
+        android:text="@string/placeholder_quantity"
+        tools:ignore="TextSizeCheck" />
 
     <TextView
         android:id="@+id/tvItemUnit"
@@ -20,7 +31,8 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/tvItemQuantity"
         android:paddingVertical="16dp"
-        android:text="@string/placeholder_quantity" />
+        android:text="@string/placeholder_quantity"
+        tools:ignore="TextSizeCheck" />
 
     <TextView
         android:id="@+id/tvItemTitle"
@@ -69,26 +81,59 @@
             app:tint="@color/white" />
     </LinearLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/container_renameItem"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
+    <LinearLayout android:id="@+id/editItemContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="?android:attr/colorBackground"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:visibility="gone">
+        android:orientation="horizontal"
+        android:visibility="gone"
+        >
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/input_rename_item"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:autofillHints="no"
-            android:ellipsize="end"
-            android:hint="@string/item_rename"
-            android:inputType="text"
-            android:singleLine="true" />
+            android:layout_weight="1"
+            android:background="?android:attr/colorBackground">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editItemQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="no"
+                android:ellipsize="end"
+                android:inputType="number"
+                android:singleLine="true"
+                android:hint=""/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Spinner
+            android:id="@+id/editItemUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/transparent"
+            android:minHeight="48dp"
+            android:spinnerMode="dropdown" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:background="?android:attr/colorBackground">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editItemTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="no"
+                android:ellipsize="end"
+                android:inputType="text"
+                android:singleLine="true"
+                android:hint=""/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
 
 </RelativeLayout>

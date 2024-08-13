@@ -26,7 +26,7 @@ class RecyclerViewTouchListener(
         if (adapter is ItemAdapter) {
             if (position == adapter.getRenamePosition()) {
                 val viewHolder = rv.findViewHolderForAdapterPosition(position) ?: return false
-                val renameLayout = viewHolder.itemView.findViewById<View>(R.id.container_renameItem)
+                val renameLayout = viewHolder.itemView.findViewById<View>(R.id.editItemContainer)
                 if (isTouchInsideView(e, renameLayout)) {
                     return false
                 }
@@ -35,7 +35,7 @@ class RecyclerViewTouchListener(
             // Assuming ListAdapter has similar methods for rename/swiped position
             if (position == adapter.getRenamePosition()) {
                 val viewHolder = rv.findViewHolderForAdapterPosition(position) ?: return false
-                val renameLayout = viewHolder.itemView.findViewById<View>(R.id.container_renameItem)
+                val renameLayout = viewHolder.itemView.findViewById<View>(R.id.editItemContainer)
                 if (isTouchInsideView(e, renameLayout)) {
                     return false
                 }
