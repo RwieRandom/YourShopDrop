@@ -16,13 +16,15 @@
     <color name="light_Secondary">#E7F5FF</color>
     <color name="light_OnSecondary">#3860EE</color>
     <color name="light_Tertiary">#DDDDDD</color>
+    <color name="light_BackgroundFloating">#80000000</color>
 
     <!-- res/values-night/colors.xml -->
-    <color name="dark_Background">#000000</color>
+    <color name="dark_Background">#202325</color>
     <color name="dark_OnBackground">#FFFFFF</color>
-    <color name="dark_Primary">#BB86FC</color>
-    <color name="dark_OnPrimary">#000000</color>
-    <color name="dark_Secondary">#3700B3</color>
-    <color name="dark_OnSecondary">#FFFFFF</color>
-    <color name="dark_Tertiary">#212121</color>
+    <color name="dark_Primary">#3860EE</color>
+    <color name="dark_OnPrimary">#FFFFFF</color>
+    <color name="dark_Secondary">#3860EE</color>
+    <color name="dark_OnSecondary">#3860EE</color>
+    <color name="dark_Tertiary">#80363636</color>
+    <color name="dark_BackgroundFloating">#803C3C3C</color>
 </resources>

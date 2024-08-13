@@ -2,7 +2,7 @@ package de.your.yourshopdrop
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.graphics.Color
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -32,7 +32,11 @@ class ScreenInflater(private val context: Activity, private val screenManager: S
         val params = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         params.topMargin = Tools.marginInPx(context, 30)
         backgroundView.layoutParams = params
-        backgroundView.setBackgroundColor(Color.parseColor("#80000000")) // Halbtransparenter Hintergrund
+        val typedValue = TypedValue()
+        context.theme.resolveAttribute(android.R.attr.colorBackgroundFloating, typedValue, true)
+        val colorBackgroundFloating = typedValue.data
+        backgroundView.setBackgroundColor(colorBackgroundFloating)
+
         backgroundView.isFocusableInTouchMode = false
 
 

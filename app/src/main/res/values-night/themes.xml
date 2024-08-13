@@ -7,5 +7,6 @@
         <item name="colorTertiary">@color/dark_Tertiary</item>
         <item name="android:colorBackground">@color/dark_Background</item>
         <item name="colorOnBackground">@color/dark_OnBackground</item>
+        <item name="android:colorBackgroundFloating">@color/dark_BackgroundFloating</item>
     </style>
 </resources>
