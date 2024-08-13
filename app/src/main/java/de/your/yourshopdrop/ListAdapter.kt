@@ -61,6 +61,9 @@ class ListAdapter(private val itemManager: ItemManager, private val itemAdapter:
                 }
             } else {
                 renameLayout.visibility = View.GONE
+
+                renameEditText.text!!.clear()
+                renameEditText.clearFocus()
             }
 
             btnShowList.setOnClickListener {
