@@ -85,9 +85,16 @@ class ListAdapter(private val itemManager: ItemManager, private val itemAdapter:
             renameEditText.setOnEditorActionListener { v, actionId, _ ->
                 if (Tools.getKeyboardEnter(actionId)) {
                     val newName = renameEditText.text.toString()
-                    renameEditText.text!!.clear()
-                    itemManager.renameList(listTitle.text.toString(), newName)
+
+                    if(newName.isNotEmpty()){
+                        itemManager.renameList(listTitle.text.toString(), newName)
+                    }
+
                     renamePosition = -1
+
+                    renameEditText.text!!.clear()
+                    renameEditText.clearFocus()
+
                     notifyItemChanged(position)
                     Tools.hideKeyboard(v)
                     true
