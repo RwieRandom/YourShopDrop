@@ -11,7 +11,7 @@ android {
         applicationId = "de.your.yourshopdrop"
         minSdk = 29
         targetSdk = 34
-        versionCode = 73
+        versionCode = 90
         versionName = "0.9"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
