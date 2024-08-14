@@ -22,11 +22,13 @@ class ScreenInflater(private val context: Activity, private val screenManager: S
     fun createScreen(layout: Int): Screen {
         val screenView: View = inflater.inflate(layout, null)
 
+        val slideDownAnimation = Tools.createSlideDownAnimation()
+        screenView.startAnimation(slideDownAnimation)
+
         val width = LinearLayout.LayoutParams.MATCH_PARENT
         val height = LinearLayout.LayoutParams.WRAP_CONTENT
         val popupWindow = PopupWindow(screenView, width, height, true)
 
-        // Hintergrund-ImageView erstellen, um Touch-Ereignisse abzufangen
         val backgroundView = FrameLayout(context)
 
         val params = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
@@ -39,15 +41,12 @@ class ScreenInflater(private val context: Activity, private val screenManager: S
 
         backgroundView.isFocusableInTouchMode = false
 
-
-        // Hintergrund-View zur Fensteransicht hinzufügen
         val parentView = context.window.decorView as ViewGroup
         parentView.addView(backgroundView)
 
         screenView.setOnTouchListener { _, _ -> true }
         backgroundView.setOnTouchListener { _, _ -> true }
 
-        // Entferne die Hintergrund-View wenn das Popup geschlossen wird
         popupWindow.setOnDismissListener {
             parentView.removeView(backgroundView)
             screenManager.onScreenClose()

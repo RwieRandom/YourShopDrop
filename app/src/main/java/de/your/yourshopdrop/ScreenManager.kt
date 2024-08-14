@@ -14,7 +14,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.textfield.TextInputEditText
 
 
 class ScreenManager (private val context: Activity, private val itemAdapter: ItemAdapter, private val itemManager: ItemManager, private val activity: MainActivity){

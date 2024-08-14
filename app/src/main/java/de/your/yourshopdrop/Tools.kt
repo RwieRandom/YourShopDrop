@@ -6,6 +6,8 @@ import android.graphics.RenderEffect
 import android.graphics.Shader
 import android.os.Build
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.TranslateAnimation
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
@@ -65,6 +67,28 @@ class Tools {
 
          fun getKeyboardEnter(actionId: Int): Boolean {
              return actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT
+         }
+
+         fun createSlideDownAnimation(duration: Long = 250): Animation {
+             val animation = TranslateAnimation(
+                 Animation.RELATIVE_TO_PARENT, 0f,
+                 Animation.RELATIVE_TO_PARENT, 0f,
+                 Animation.RELATIVE_TO_PARENT, -1f,
+                 Animation.RELATIVE_TO_PARENT, 0f
+             )
+             animation.duration = duration
+             return animation
+         }
+
+         fun createSlideUpAnimation(duration: Long = 250): Animation {
+             val animation = TranslateAnimation(
+                 Animation.RELATIVE_TO_PARENT, 0f,
+                 Animation.RELATIVE_TO_PARENT, 0f,
+                 Animation.RELATIVE_TO_PARENT, 0f,
+                 Animation.RELATIVE_TO_PARENT, -1f
+             )
+             animation.duration = duration
+             return animation
          }
 
      }
