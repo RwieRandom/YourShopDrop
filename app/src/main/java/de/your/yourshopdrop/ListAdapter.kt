@@ -46,6 +46,8 @@ class ListAdapter(private val itemManager: ItemManager, private val itemAdapter:
             val btnRename = findViewById<ImageButton>(R.id.btnSwipeRename)
             val btnDelete = findViewById<ImageButton>(R.id.btnSwipeDelete)
 
+            btnShowList.contentDescription = activity.getString(R.string.description_OpenList) + ": " + currentList
+
             listTitle.text = currentList
 
             swipeLayout.visibility = if (position == swipedPosition) View.VISIBLE else View.GONE
