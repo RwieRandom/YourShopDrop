@@ -11,7 +11,7 @@ android {
         applicationId = "de.your.yourshopdrop"
         minSdk = 29
         targetSdk = 34
-        versionCode = 90
+        versionCode = 91
         versionName = "0.9"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -26,6 +26,8 @@ android {
             )
             signingConfig = signingConfigs.getByName("debug")
         }
+
+
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -43,8 +45,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.integrity)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
 }
