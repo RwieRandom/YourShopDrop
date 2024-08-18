@@ -11,8 +11,8 @@ android {
         applicationId = "de.your.yourshopdrop"
         minSdk = 29
         targetSdk = 34
-        versionCode = 94
-        versionName = "0.9.4"
+        versionCode = 97
+        versionName = "0.9.7"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -20,6 +20,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
+            isShrinkResources = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
