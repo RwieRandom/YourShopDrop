@@ -11,10 +11,14 @@ android {
         applicationId = "de.your.yourshopdrop"
         minSdk = 29
         targetSdk = 34
-        versionCode = 97
-        versionName = "0.9.7"
+        versionCode = 100
+        versionName = "1.0.0.0"
+    }
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    bundle {
+        language {
+            enableSplit = false // Deaktiviert das Sprach-Splitting
+        }
     }
 
     buildTypes {
@@ -27,8 +31,6 @@ android {
             )
             signingConfig = signingConfigs.getByName("debug")
         }
-
-
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
