@@ -21,12 +21,11 @@ class ScreenManager (private val context: Activity, private val itemAdapter: Ite
     private lateinit var addItemQuantity : EditText
     private lateinit var addItemUnit : Spinner
 
-    private var currentActiveScreen: Screen = Screen.START
+    private var currentActiveScreen: Screen? = null
     private lateinit var inflatedScreen: ScreenInflater.Screen
 
     private val screenInflater = ScreenInflater(context, this)
     private var currentActivePopup: PopupWindow? = null
-
 
 
     fun showScreen(screen: Screen){
@@ -41,24 +40,18 @@ class ScreenManager (private val context: Activity, private val itemAdapter: Ite
         when(screen){
             Screen.ADD_ITEM -> {
                 inflatedScreen = screenAddItem()
-                Tools.blurView(scrollViewListItems)
             }
             Screen.SETTINGS -> {
                 inflatedScreen = screenSettings()
                 selectedItemSettings.visibility = View.VISIBLE
-                Tools.blurView(scrollViewListItems)
             }
             Screen.LISTS -> {
                 inflatedScreen = screenLists()
                 selectedItemLists.visibility = View.VISIBLE
-                Tools.blurView(scrollViewListItems)
-            }
-            Screen.START -> {
-                //TODO: Startscreen zeigen
-                inflatedScreen = screenAddItem()
             }
         }
 
+        Tools.blurView(scrollViewListItems)
         currentActiveScreen = screen
         currentActivePopup = inflatedScreen.popupWindow
     }
