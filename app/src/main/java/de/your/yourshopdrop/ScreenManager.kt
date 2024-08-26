@@ -41,28 +41,25 @@ class ScreenManager (private val context: Activity, private val itemAdapter: Ite
         when(screen){
             Screen.ADD_ITEM -> {
                 inflatedScreen = screenAddItem()
-                currentActiveScreen = Screen.ADD_ITEM
                 Tools.blurView(scrollViewListItems)
             }
             Screen.SETTINGS -> {
                 inflatedScreen = screenSettings()
                 selectedItemSettings.visibility = View.VISIBLE
-                currentActiveScreen = Screen.SETTINGS
                 Tools.blurView(scrollViewListItems)
             }
             Screen.LISTS -> {
                 inflatedScreen = screenLists()
                 selectedItemLists.visibility = View.VISIBLE
-                currentActiveScreen = Screen.LISTS
                 Tools.blurView(scrollViewListItems)
             }
             Screen.START -> {
                 //TODO: Startscreen zeigen
                 inflatedScreen = screenAddItem()
-                currentActiveScreen = Screen.START
             }
         }
 
+        currentActiveScreen = screen
         currentActivePopup = inflatedScreen.popupWindow
     }
 
