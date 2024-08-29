@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.File
 
+//TODO: speichern lokal und Datenbank falls angemeldet
 open class SaveManager(val context: Context) {
 
     val gson = Gson()

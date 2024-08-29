@@ -139,6 +139,8 @@ class ScreenManager (private val context: Activity, private val itemAdapter: Ite
         return inflatedScreen
     }
 
+
+    //TODO: Man kann Listen teilen, sodass man sich die geteilte Liste ansehen kann (txt oder html o.ä)
     private fun screenLists() : ScreenInflater.Screen {
         val inflatedScreen = screenInflater.createScreen(R.layout.screen_lists)
 

@@ -15,7 +15,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
 
-//TODO: Werden items abgehakt, dann werden sie nach ganz unten verschoben. Wird ein neues item hinzugefügt, soll das über den abgehakten hinzugefügt werden
+//TODO: Hakt man ein item ab, wird es automatisch nach unten verschoben(wie bei Apple Notizen)
 class ItemAdapter(private val itemManager: ItemManager) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
 
     private var swipedPosition = -1

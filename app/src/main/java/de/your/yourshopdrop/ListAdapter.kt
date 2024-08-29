@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
+//TODO: Standardliste wird automatisch umbenannt wenn die Sprache gewechselt wird
 class ListAdapter(private val itemManager: ItemManager, private val itemAdapter: ItemAdapter, private val screenManager: ScreenManager, private val activity: Activity) : RecyclerView.Adapter<ListAdapter.ItemViewHolder>() {
 
     private var swipedPosition = -1
